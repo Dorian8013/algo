@@ -54,16 +54,11 @@ First you will be asked which server type to setup. You would want to enter "2" 
 $ ./ralgo
 
   What provider would you like to use?
-    1. DigitalOcean
-    2. Amazon EC2
-    3. Microsoft Azure
-    4. Google Compute Engine
-    5. Scaleway
-    6. OpenStack (DreamCompute optimised)
-    7. Install to existing Ubuntu 16.04 server (Advanced)
+    1. Amazon EC2
+    2. Install to existing Ubuntu 16.04 server (Advanced)
 
 Enter the number of your desired provider
-: 2
+: 1
 ```
 
 Next you will be asked for the AWS Access Key (Access Key ID) and AWS Secret Key (Secret Access Key) that you received in  the CSV file when you setup the account (don't worry if you don't see your text entered in the console; the key input is  hidden here by rAlgo).

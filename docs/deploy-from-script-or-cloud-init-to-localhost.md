@@ -19,17 +19,7 @@ The command will prepare the environment and install rAlgoVPN with the default p
 
 - `METHOD`: which method of the deployment to use. Possible values are local and cloud. Default: cloud. The cloud method is intended to use in cloud-init deployments only. If you are not using cloud-init to deploy the server you have to use the local method.
 
-- `ONDEMAND_CELLULAR`: "Connect On Demand" when connected to cellular networks. Boolean. Default: false.
-
-- `ONDEMAND_WIFI`: "Connect On Demand" when connected to Wi-Fi. Default: false.
-
-- `ONDEMAND_WIFI_EXCLUDE`: List the names of any trusted Wi-Fi networks where macOS/iOS IPsec clients should not use "Connect On Demand". Comma-separated list.
-
-- `STORE_PKI`: To retain the PKI. (required to add users in the future, but less secure). Default: false.
-
 - `DNS_ADBLOCKING`: To install an ad blocking DNS resolver. Default: false.
-
-- `SSH_TUNNELING`: Enable SSH tunneling for each user. Default: false.
 
 - `ENDPOINT`: The public IP address or domain name of your server: (IMPORTANT! This is used to verify the certificate). It will be gathered automatically for DigitalOcean, AWS, GCE, Azure or Vultr if the `METHOD` is cloud. Otherwise you need to define this variable according to your public IP address.
 
@@ -49,8 +39,6 @@ The command will prepare the environment and install rAlgoVPN with the default p
 
 ```
 #!/bin/bash
-export ONDEMAND_CELLULAR=true
-export SSH_TUNNELING=true
 curl -s https://raw.githubusercontent.com/Dorian8013/rAlgo/master/install.sh | sudo -E bash -x
 ```
 
@@ -58,7 +46,6 @@ curl -s https://raw.githubusercontent.com/Dorian8013/rAlgo/master/install.sh | s
 
 ```
 export METHOD=local
-export ONDEMAND_CELLULAR=true
 export ENDPOINT=[your server's IP here]
 curl -s https://raw.githubusercontent.com/Dorian8013/rAlgo/master/install.sh | sudo -E bash -x
 ```

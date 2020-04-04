@@ -15,7 +15,7 @@ While it is not possible to run your rAlgo server from within a Docker container
 4. Run the Docker container, mounting your configurations appropriately (assuming the container is named `dorian8013/ralgo` with a tag `latest`):
   - From Windows:
    ```powershell
-   C:\Users\trailofbits> docker run --cap-drop=all -it \
+   C:\Users\[USER]> docker run --cap-drop=all -it \
      -v C:\Users\[USER]\Documents\VPNs:/data \
      dorian8013/rAlgo:latest
    ```
@@ -39,17 +39,13 @@ _The leading `-e` (or `--extra-vars`) is required_, e.g.
 $ RALGO_ARGS="-e
     provider=digitalocean
     server_name=ralgo
-    ondemand_cellular=false
-    ondemand_wifi=false
     dns_adblocking=true
-    ssh_tunneling=true
-    store_pki=true
     region=ams3
     do_token=token"
 
 $ docker run --cap-drop=all -it \
     -e "RALGO_ARGS=$RALGO_ARGS" \
-    -v /home/trailofbits/Documents/VPNs:/data \
+    -v /home/[USER]/Documents/VPNs:/data \
     dorian8013/rAlgo:latest
 ```
 
@@ -61,7 +57,7 @@ If you want to use rAlgo to update the users on an existing server, specify `-e 
 ```powershell
 $ docker run --cap-drop=all -it \
   -e "RALGO_ARGS=update-users" \
-  -v C:\Users\trailofbits\Documents\VPNs:/data \
+  -v C:\Users\[USER]\Documents\VPNs:/data \
   dorian8013/rAlgo:latest
 ```
 

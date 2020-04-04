@@ -11,10 +11,7 @@ Here is a full example for DigitalOcean:
 ```shell
 ansible-playbook main.yml -e "provider=digitalocean
                                 server_name=ralgo
-                                ondemand_cellular=false
-                                ondemand_wifi=false
                                 dns_adblocking=true
-                                store_pki=true
                                 region=ams3
                                 do_token=token"
 ```
@@ -35,16 +32,7 @@ Cloud roles can be activated by specifying an extra variable `provider`.
 
 Cloud roles:
 
-- role: cloud-digitalocean, [provider: digitalocean](#digital-ocean)
-- role: cloud-ec2,          [provider: ec2](#amazon-ec2)
-- role: cloud-gce,          [provider: gce](#google-compute-engine)
-- role: cloud-vultr,        [provider: vultr](#vultr)
-- role: cloud-azure,        [provider: azure](#azure)
-- role: cloud-lightsail,    [provider: lightsail](#lightsail)
-- role: cloud-scaleway,     [provider: scaleway](#scaleway)
-- role: cloud-openstack,    [provider: openstack](#openstack)
-- role: cloud-cloudstack,   [provider: cloudstack](#cloudstack)
-- role: cloud-hetzner,      [provider: hetzner](#hetzner)
+- role: cloud-ec2          [provider: ec2](#amazon-ec2)
 
 Server roles:
 
@@ -55,12 +43,6 @@ Server roles:
   * Installs a [Wireguard](https://www.wireguard.com/) server, with a startup script, and automatic checks for upgrades
   * Creates wireguard.conf files for Linux clients as well as QR codes for Apple/Android clients
 
-Note: The `strongswan` role generates Apple profiles with On-Demand Wifi and Cellular if you pass the following variables:
-
-- ondemand_wifi: true
-- ondemand_wifi_exclude: HomeNet,OfficeWifi
-- ondemand_cellular: true
-
 ### Local Installation
 
 - role: local, provider: local
@@ -70,7 +52,6 @@ This role is intended to be run for local install onto an Ubuntu server, or onto
 - server - IP address of your server (or "localhost" if deploying to the local machine)
 - endpoint - public IP address of the server you're installing on
 - ssh_user - name of the SSH user you will use to install on the machine (passwordless login required). If `server=localhost`, this isn't required.
-- ca_password - Password for the private CA key
 
 Note that by default, the iptables rules on your existing server will be overwritten. If you don't want to overwrite the iptables rules, you can use the `--skip-tags iptables` flag.
 

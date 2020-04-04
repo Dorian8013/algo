@@ -64,11 +64,11 @@ The easiest way to get an rAlgo server running is to run it on your local system
     ```
     On Fedora add the option `--system-site-packages` to the first command above. On macOS install the C compiler if prompted.
 
-5. **Set your configuration options.** Open the file `config.cfg` in your favorite text editor. Specify the users you wish to create in the `users` list. Create a unique user for each device you plan to connect to your VPN. If you want to be able to add or delete users later, you **must** select `yes` at the `Do you want to retain the keys (PKI)?` prompt during the deployment. You should also review the other options before deployment, as changing your mind about them later [may require you to deploy a brand new server](https://github.com/Dorian8013/rAlgo/blob/master/docs/faq.md#i-deployed-an-ralgo-server-can-you-update-it-with-new-features).
+5. **Set your configuration options.** Open the file `config.cfg` in your favorite text editor. Specify the users you wish to create in the `users` list. Create a unique user for each device you plan to connect to your VPN. You should also review the other options before deployment, as changing your mind about them later [may require you to deploy a brand new server](https://github.com/Dorian8013/rAlgo/blob/master/docs/faq.md#i-deployed-an-ralgo-server-can-you-update-it-with-new-features).
 
 6. **Start the deployment.** Return to your terminal. In the rAlgo directory, run `./ralgo` and follow the instructions. There are several optional features available. None are required for a fully functional VPN server. These optional features are described in greater detail in [here](docs/deploy-from-ansible.md).
 
-That's it! You will get the message below when the server deployment process completes. Take note of the p12 (user certificate) password and the CA key in case you need them later, **they will only be displayed this time**.
+That's it! You will get the message below when the server deployment process completes.
 
 You can now set up clients to connect to your VPN. Proceed to [Configure the VPN Clients](#configure-the-vpn-clients) below.
 
@@ -79,8 +79,6 @@ You can now set up clients to connect to your VPN. Proceed to [Configure the VPN
     "#              Go to https://whoer.net/ after connecting               #"
     "#        and ensure that all your traffic passes through the VPN.      #"
     "#                     Local DNS resolver 172.16.0.1                    #"
-    "#        The p12 and SSH keys password for new users is XXXXXXXX       #"
-    "#        The CA key password is XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       #"
     "#      Shell access: ssh -F configs/<server_ip>/ssh_config <hostname>  #"
 ```
 
@@ -140,16 +138,6 @@ Include <ralgodirectory>/configs/*/ssh_config
 ```
 
 where `<ralgodirectory>` is the directory where you cloned rAlgo.
-
-## Adding or Removing Users
-
-_If you chose to save the CA key during the deploy process,_ then rAlgo's own scripts can easily add and remove users from the VPN server.
-
-1. Update the `users` list in your `config.cfg`
-2. Open a terminal, `cd` to the rAlgo directory, and activate the virtual environment with `source .env/bin/activate`
-3. Run the command: `./ralgo update-users`
-
-After this process completes, the rAlgo VPN server will contain only the users listed in the `config.cfg` file.
 
 ## Additional Documentation
 * [Deployment instructions, cloud provider setup instructions, and further client setup instructions available here.](docs/index.md)
