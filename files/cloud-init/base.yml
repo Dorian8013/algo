@@ -9,8 +9,8 @@ packages:
 
 users:
   - default
-  - name: algo
-    homedir: /home/algo
+  - name: ralgo
+    homedir: /home/ralgo
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: adm,netdev
     shell: /bin/bash

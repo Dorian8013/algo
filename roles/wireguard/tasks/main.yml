@@ -98,7 +98,7 @@
   become: false
   delegate_to: localhost
   when:
-    - not algo_store_pki
+    - not ralgo_store_pki
     - not pki_in_tmpfs
 
 - meta: flush_handlers

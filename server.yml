@@ -28,7 +28,7 @@
             dest: "configs/{{ IP_subject_alt_name }}/ssh_config"
             mode: "0600"
             content: |
-              Host {{ IP_subject_alt_name }} {{ algo_server_name }}
+              Host {{ IP_subject_alt_name }} {{ ralgo_server_name }}
                 HostName {{ IP_subject_alt_name }}
                 User {{ ansible_ssh_user }}
                 Port {{ ansible_ssh_port }}
@@ -46,7 +46,7 @@
       - import_role:
           name: dns
         when:
-          - algo_dns_adblocking or
+          - ralgo_dns_adblocking or
             dns_encryption
         tags: dns
 
@@ -62,7 +62,7 @@
 
       - import_role:
           name: ssh_tunneling
-        when: algo_ssh_tunneling
+        when: ralgo_ssh_tunneling
         tags: ssh_tunneling
 
       - block:
@@ -73,17 +73,17 @@
               server: {{ 'localhost' if inventory_hostname == 'localhost' else inventory_hostname }}
               server_user: {{ ansible_ssh_user }}
               ansible_ssh_port: "{{ ansible_ssh_port|default(22) }}"
-              {% if algo_provider != "local" %}
+              {% if ralgo_provider != "local" %}
               ansible_ssh_private_key_file: {{ SSH_keys.private }}
               {% endif %}
-              algo_provider: {{ algo_provider }}
-              algo_server_name: {{ algo_server_name }}
-              algo_ondemand_cellular: {{ algo_ondemand_cellular }}
-              algo_ondemand_wifi: {{ algo_ondemand_wifi }}
-              algo_ondemand_wifi_exclude: {{ algo_ondemand_wifi_exclude }}
-              algo_dns_adblocking: {{ algo_dns_adblocking }}
-              algo_ssh_tunneling: {{ algo_ssh_tunneling }}
-              algo_store_pki: {{ algo_store_pki }}
+              ralgo_provider: {{ ralgo_provider }}
+              ralgo_server_name: {{ ralgo_server_name }}
+              ralgo_ondemand_cellular: {{ ralgo_ondemand_cellular }}
+              ralgo_ondemand_wifi: {{ ralgo_ondemand_wifi }}
+              ralgo_ondemand_wifi_exclude: {{ ralgo_ondemand_wifi_exclude }}
+              ralgo_dns_adblocking: {{ ralgo_dns_adblocking }}
+              ralgo_ssh_tunneling: {{ ralgo_ssh_tunneling }}
+              ralgo_store_pki: {{ ralgo_store_pki }}
               IP_subject_alt_name: {{ IP_subject_alt_name }}
               ipsec_enabled: {{ ipsec_enabled }}
               wireguard_enabled: {{ wireguard_enabled }}
@@ -110,14 +110,14 @@
             facts: "{{ hostvars['localhost'] }}"
           when:
             - pki_in_tmpfs
-            - not algo_store_pki
+            - not ralgo_store_pki
 
         - debug:
             msg:
               - "{{ congrats.common.split('\n') }}"
-              - "    {{ congrats.p12_pass if algo_ssh_tunneling or ipsec_enabled else '' }}"
-              - "    {{ congrats.ca_key_pass if algo_store_pki and ipsec_enabled else '' }}"
-              - "    {{ congrats.ssh_access if algo_provider != 'local' else ''}}"
+              - "    {{ congrats.p12_pass if ralgo_ssh_tunneling or ipsec_enabled else '' }}"
+              - "    {{ congrats.ca_key_pass if ralgo_store_pki and ipsec_enabled else '' }}"
+              - "    {{ congrats.ssh_access if ralgo_provider != 'local' else ''}}"
         tags: always
       rescue:
         - include_tasks: playbooks/rescue.yml

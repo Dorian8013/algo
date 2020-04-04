@@ -25,7 +25,7 @@ Add any other context about the problem here.
 
 **Full log**
 
-<!--- Put here the FULL LOG after you run the ./algo script below -->
+<!--- Put here the FULL LOG after you run the ./ralgo script below -->
 
 ```
 PUT THE OUTPUT HERE

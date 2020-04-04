@@ -10,7 +10,7 @@
     aws_access_key: "{{ access_key }}"
     aws_secret_key: "{{ secret_key }}"
     owners: "{{ cloud_providers.ec2.image.owner }}"
-    region: "{{ algo_region }}"
+    region: "{{ ralgo_region }}"
     filters:
       name: "ubuntu/images/hvm-ssd/{{ cloud_providers.ec2.image.name }}-amd64-server-*"
   register: ami_search
@@ -24,6 +24,6 @@
 
 - set_fact:
     cloud_instance_ip: "{{ stack.stack_outputs.ElasticIP }}"
-    ansible_ssh_user: algo
+    ansible_ssh_user: ralgo
     ansible_ssh_port: "{{ ssh_port }}"
     cloudinit: true

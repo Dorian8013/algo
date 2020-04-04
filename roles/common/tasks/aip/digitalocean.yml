@@ -14,8 +14,8 @@
 
 - name: IPv6 egress alias configured
   template:
-    src: 99-algo-ipv6-egress.yaml.j2
-    dest: /etc/netplan/99-algo-ipv6-egress.yaml
+    src: 99-ralgo-ipv6-egress.yaml.j2
+    dest: /etc/netplan/99-ralgo-ipv6-egress.yaml
   when:
     - ipv6_support
     - ipv6_subnet_size|int > 1

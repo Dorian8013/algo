@@ -43,14 +43,14 @@
     - block:
         - name: Set facts based on the input
           set_fact:
-            algo_server: >-
+            ralgo_server: >-
               {% if server is defined %}{{ server }}
               {%- elif _server.user_input %}{{ server_list[_server.user_input | int -1 ] }}
               {%- else %}omit{% endif %}
 
         - name: Import host specific variables
           include_vars:
-            file: "configs/{{ algo_server }}/.config.yml"
+            file: "configs/{{ ralgo_server }}/.config.yml"
 
         - when: ipsec_enabled
           block:
@@ -74,10 +74,10 @@
 
         - name: Add the server to the vpn-host group
           add_host:
-            name: "{{ algo_server }}"
+            name: "{{ ralgo_server }}"
             groups: vpn-host
             ansible_ssh_user: "{{ server_user|default('root') }}"
-            ansible_connection: "{% if algo_server == 'localhost' %}local{% else %}ssh{% endif %}"
+            ansible_connection: "{% if ralgo_server == 'localhost' %}local{% else %}ssh{% endif %}"
             ansible_python_interpreter: "/usr/bin/python3"
             CA_password: "{{ CA_password|default(omit) }}"
       rescue:
@@ -107,14 +107,14 @@
 
       - import_role:
           name: ssh_tunneling
-        when: algo_ssh_tunneling
+        when: ralgo_ssh_tunneling
 
       - debug:
           msg:
             - "{{ congrats.common.split('\n') }}"
-            - "    {{ congrats.p12_pass if algo_ssh_tunneling or ipsec_enabled else '' }}"
-            - "    {{ congrats.ca_key_pass if algo_store_pki and ipsec_enabled else '' }}"
-            - "    {{ congrats.ssh_access if algo_provider != 'local' else ''}}"
+            - "    {{ congrats.p12_pass if ralgo_ssh_tunneling or ipsec_enabled else '' }}"
+            - "    {{ congrats.ca_key_pass if ralgo_store_pki and ipsec_enabled else '' }}"
+            - "    {{ congrats.ssh_access if ralgo_provider != 'local' else ''}}"
         tags: always
       rescue:
         - include_tasks: playbooks/rescue.yml

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Print information about Algo's invocation environment to aid in debugging.
+# Print information about rAlgo's invocation environment to aid in debugging.
 # This is normally called from Ansible right before a deployment gets underway.
 
 # Skip printing this header if we're just testing with no arguments.
@@ -10,8 +10,8 @@ if [[ $# -gt 0 ]]; then
     echo ""
 fi
 
-if [[ ! -f ./algo ]]; then
-    echo "This should be run from the top level Algo directory"
+if [[ ! -f ./ralgo ]]; then
+    echo "This should be run from the top level rAlgo directory"
 fi
 
 # Determine the operating system.
@@ -50,13 +50,13 @@ elif [[ -f /.dockerenv ]]; then
     VIRTUALIZED=" (Virtualized: docker)"
 fi
 
-echo "Algo running on: ${OS}${VIRTUALIZED}"
+echo "rAlgo running on: ${OS}${VIRTUALIZED}"
 
-# Determine the currentness of the Algo software.
+# Determine the currentness of the rAlgo software.
 if [[ -d .git && -x $(command -v git) ]]; then
     ORIGIN="$(git remote get-url origin)"
     COMMIT="$(git log --max-count=1 --oneline --no-decorate --no-color)"
-    if [[ ${ORIGIN} == "https://github.com/trailofbits/algo.git" ]]; then
+    if [[ ${ORIGIN} == "https://github.com/Dorian8013/rAlgo.git" ]]; then
         SOURCE="clone"
     else
         SOURCE="fork"
@@ -70,7 +70,7 @@ fi
 # The Python version might be useful to know.
 if [[ -x ./.env/bin/python3 ]]; then
     ./.env/bin/python3 --version 2>&1
-elif [[ -f ./algo ]]; then
+elif [[ -f ./ralgo ]]; then
     echo ".env/bin/python3 not found: has 'python3 -m virtualenv ...' been run?"
 fi
 

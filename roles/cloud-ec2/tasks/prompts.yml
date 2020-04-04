@@ -2,7 +2,7 @@
 - pause:
     prompt: |
       Enter your aws_access_key (http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html)
-      Note: Make sure to use an IAM user with an acceptable policy attached (see https://github.com/trailofbits/algo/blob/master/docs/deploy-from-ansible.md)
+      Note: Make sure to use an IAM user with an acceptable policy attached (see https://github.com/dorian8013/ralgo/blob/master/docs/deploy-from-ansible.md)
     echo: false
   register: _aws_access_key
   when:
@@ -51,23 +51,23 @@
 
         Enter the number of your desired region
         [{{ default_region }}]
-    register: _algo_region
+    register: _ralgo_region
   when: region is undefined
 
-- name: Set algo_region and stack_name facts
+- name: Set ralgo_region and stack_name facts
   set_fact:
-    algo_region: >-
+    ralgo_region: >-
       {% if region is defined %}{{ region }}
-      {%- elif _algo_region.user_input %}{{ aws_regions[_algo_region.user_input | int -1 ]['region_name'] }}
+      {%- elif _ralgo_region.user_input %}{{ aws_regions[_ralgo_region.user_input | int -1 ]['region_name'] }}
       {%- else %}{{ aws_regions[default_region | int - 1]['region_name'] }}{% endif %}
-    stack_name: "{{ algo_server_name | replace('.', '-') }}"
+    stack_name: "{{ ralgo_server_name | replace('.', '-') }}"
 
 - block:
   - name: Get existing available Elastic IPs
     ec2_eip_facts:
       aws_access_key: "{{ access_key }}"
       aws_secret_key: "{{ secret_key }}"
-      region: "{{ algo_region }}"
+      region: "{{ ralgo_region }}"
     register: raw_eip_addresses
 
   - set_fact:

@@ -4,7 +4,7 @@
   tags: always
   vars:
     defaults:
-      server_name: algo
+      server_name: ralgo
       ondemand_cellular: false
       ondemand_wifi: false
       dns_adblocking: false
@@ -36,22 +36,22 @@
               {% endfor %}
 
             Enter the number of your desired provider
-        register: _algo_provider
+        register: _ralgo_provider
         when: provider is undefined
 
       - name: Set facts based on the input
         set_fact:
-          algo_provider: "{{ provider | default(providers_map[_algo_provider.user_input|default(omit)|int - 1]['alias']) }}"
+          ralgo_provider: "{{ provider | default(providers_map[_ralgo_provider.user_input|default(omit)|int - 1]['alias']) }}"
 
       - name: VPN server name prompt
         pause:
           prompt: |
             Name the vpn server
-            [algo]
-        register: _algo_server_name
+            [ralgo]
+        register: _ralgo_server_name
         when:
           - server_name is undefined
-          - algo_provider != "local"
+          - ralgo_provider != "local"
 
       - name: Cellular On Demand prompt
         pause:
@@ -73,7 +73,7 @@
         pause:
           prompt: |
             List the names of any trusted Wi-Fi networks where macOS/iOS clients should not use "Connect On Demand"
-            (e.g., your home network. Comma-separated value, e.g., HomeNet,OfficeWifi,AlgoWiFi)
+            (e.g., your home network. Comma-separated value, e.g., HomeNet,OfficeWifi,rAlgoWiFi)
         register: _ondemand_wifi_exclude
         when:
           - ondemand_wifi_exclude is undefined
@@ -108,34 +108,34 @@
 
       - name: Set facts based on the input
         set_fact:
-          algo_server_name: >-
+          ralgo_server_name: >-
             {% if server_name is defined %}{% set _server = server_name %}
-            {%- elif _algo_server_name.user_input is defined and _algo_server_name.user_input|length > 0 -%}
-            {%- set _server = _algo_server_name.user_input -%}
+            {%- elif _ralgo_server_name.user_input is defined and _ralgo_server_name.user_input|length > 0 -%}
+            {%- set _server = _ralgo_server_name.user_input -%}
             {%- else %}{% set _server = defaults['server_name'] %}{% endif -%}
             {{ _server | regex_replace('(?!\.)(\W|_)', '-') }}
-          algo_ondemand_cellular: >-
+          ralgo_ondemand_cellular: >-
             {% if ondemand_cellular is defined %}{{ ondemand_cellular | bool }}
             {%- elif _ondemand_cellular.user_input is defined %}{{ booleans_map[_ondemand_cellular.user_input] | default(defaults['ondemand_cellular']) }}
             {%- else %}false{% endif %}
-          algo_ondemand_wifi: >-
+          ralgo_ondemand_wifi: >-
             {% if ondemand_wifi is defined %}{{ ondemand_wifi | bool }}
             {%- elif _ondemand_wifi.user_input is defined %}{{ booleans_map[_ondemand_wifi.user_input] | default(defaults['ondemand_wifi']) }}
             {%- else %}false{% endif %}
-          algo_ondemand_wifi_exclude: >-
+          ralgo_ondemand_wifi_exclude: >-
             {% if ondemand_wifi_exclude is defined %}{{ ondemand_wifi_exclude | b64encode }}
             {%- elif _ondemand_wifi_exclude.user_input is defined and _ondemand_wifi_exclude.user_input|length > 0 -%}
             {{ _ondemand_wifi_exclude.user_input | b64encode }}
             {%- else %}{{ '_null' | b64encode }}{% endif %}
-          algo_dns_adblocking: >-
+          ralgo_dns_adblocking: >-
             {% if dns_adblocking is defined %}{{ dns_adblocking | bool }}
             {%- elif _dns_adblocking.user_input is defined %}{{ booleans_map[_dns_adblocking.user_input] | default(defaults['dns_adblocking']) }}
             {%- else %}false{% endif %}
-          algo_ssh_tunneling: >-
+          ralgo_ssh_tunneling: >-
             {% if ssh_tunneling is defined %}{{ ssh_tunneling | bool }}
             {%- elif _ssh_tunneling.user_input is defined %}{{ booleans_map[_ssh_tunneling.user_input] | default(defaults['ssh_tunneling']) }}
             {%- else %}false{% endif %}
-          algo_store_pki: >-
+          ralgo_store_pki: >-
             {% if ipsec_enabled %}{%- if store_pki is defined %}{{ store_pki | bool }}
             {%- elif _store_pki.user_input is defined  %}{{ booleans_map[_store_pki.user_input] | default(defaults['store_pki']) }}
             {%- else %}false{% endif %}{% endif %}

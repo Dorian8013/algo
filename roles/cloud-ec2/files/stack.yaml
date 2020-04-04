@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Algo VPN stack'
+Description: 'rAlgo VPN stack'
 Parameters:
   InstanceTypeParameter:
     Type: String

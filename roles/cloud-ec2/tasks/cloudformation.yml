@@ -5,7 +5,7 @@
     aws_secret_key: "{{ secret_key }}"
     stack_name: "{{ stack_name }}"
     state: "present"
-    region: "{{ algo_region }}"
+    region: "{{ ralgo_region }}"
     template: roles/cloud-ec2/files/stack.yaml
     template_parameters:
       InstanceTypeParameter: "{{ cloud_providers.ec2.size }}"
@@ -17,5 +17,5 @@
       UserData: "{{ lookup('template', 'files/cloud-init/base.yml') | b64encode }}"
       SshPort: "{{ ssh_port }}"
     tags:
-      Environment: Algo
+      Environment: rAlgo
   register: stack

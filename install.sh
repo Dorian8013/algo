@@ -11,7 +11,7 @@ DNS_ADBLOCKING="${6:-${DNS_ADBLOCKING:-false}}"
 SSH_TUNNELING="${7:-${SSH_TUNNELING:-false}}"
 ENDPOINT="${8:-${ENDPOINT:-localhost}}"
 USERS="${9:-${USERS:-user1}}"
-REPO_SLUG="${10:-${REPO_SLUG:-trailofbits/algo}}"
+REPO_SLUG="${10:-${REPO_SLUG:-dorian8013/ralgo}}"
 REPO_BRANCH="${11:-${REPO_BRANCH:-master}}"
 EXTRA_VARS="${12:-${EXTRA_VARS:-placeholder=null}}"
 ANSIBLE_EXTRA_ARGS="${13:-${ANSIBLE_EXTRA_ARGS}}"
@@ -35,9 +35,9 @@ installRequirements() {
     jq -y
 }
 
-getAlgo() {
-  [ ! -d "algo" ] && git clone "https://github.com/${REPO_SLUG}" -b "${REPO_BRANCH}" algo
-  cd algo
+getrAlgo() {
+  [ ! -d "ralgo" ] && git clone "https://github.com/${REPO_SLUG}" -b "${REPO_BRANCH}" ralgo
+  cd ralgo
 
   python3 -m virtualenv --python="$(command -v python3)" .venv
   # shellcheck source=/dev/null
@@ -73,10 +73,10 @@ publicIpFromMetadata() {
   fi
 }
 
-deployAlgo() {
-  getAlgo
+deployrAlgo() {
+  getrAlgo
 
-  cd /opt/algo
+  cd /opt/ralgo
   # shellcheck source=/dev/null
   . .venv/bin/activate
 
@@ -99,7 +99,7 @@ deployAlgo() {
     -e ssh_user=root \
     -e "${EXTRA_VARS}" \
     --skip-tags debug ${ANSIBLE_EXTRA_ARGS} |
-      tee /var/log/algo.log
+      tee /var/log/ralgo.log
 }
 
 if test "$METHOD" = "cloud"; then
@@ -108,4 +108,4 @@ fi
 
 installRequirements
 
-deployAlgo
+deployrAlgo

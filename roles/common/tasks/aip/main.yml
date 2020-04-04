@@ -1,13 +1,13 @@
 ---
 - name: Verify the provider
   assert:
-    that: algo_provider in aip_supported_providers
-    msg: Algo does not support Alternative Ingress IP for {{ algo_provider }}
+    that: ralgo_provider in aip_supported_providers
+    msg: rAlgo does not support Alternative Ingress IP for {{ ralgo_provider }}
 
 - name: Include alternative ingress ip configuration
   include_tasks:
-    file: "{{ algo_provider if algo_provider in aip_supported_providers else 'placeholder' }}.yml"
-  when: algo_provider in aip_supported_providers
+    file: "{{ ralgo_provider if ralgo_provider in aip_supported_providers else 'placeholder' }}.yml"
+  when: ralgo_provider in aip_supported_providers
 
 - name: Verify SNAT IPv4 found
   assert:

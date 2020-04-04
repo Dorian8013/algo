@@ -34,7 +34,7 @@
         timeout: 320
       when: reboot_required is defined and reboot_required.stdout == 'required'
       become: false
-  when: algo_provider != "local"
+  when: ralgo_provider != "local"
 
 - name: Include unatteded upgrades configuration
   import_tasks: unattended-upgrades.yml
@@ -47,8 +47,8 @@
 
 - name: Loopback for services configured
   template:
-    src: 10-algo-lo100.network.j2
-    dest: /etc/systemd/network/10-algo-lo100.network
+    src: 10-ralgo-lo100.network.j2
+    dest: /etc/systemd/network/10-ralgo-lo100.network
   notify:
     - restart systemd-networkd
 

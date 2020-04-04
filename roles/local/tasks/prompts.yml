@@ -3,14 +3,14 @@
     prompt: |
       Enter the IP address of your server: (or use localhost for local installation):
       [localhost]
-  register: _algo_server
+  register: _ralgo_server
   when: server is undefined
 
 - name: Set the facts
   set_fact:
     cloud_instance_ip:  >-
       {% if server is defined %}{{ server }}
-      {%- elif _algo_server.user_input %}{{ _algo_server.user_input }}
+      {%- elif _ralgo_server.user_input %}{{ _ralgo_server.user_input }}
       {%- else %}localhost{% endif %}
 
 - block:
@@ -18,14 +18,14 @@
       prompt: |
         What user should we use to login on the server? (note: passwordless login required, or ignore if you're deploying to localhost)
         [root]
-    register: _algo_ssh_user
+    register: _ralgo_ssh_user
     when: ssh_user is undefined
 
   - name: Set the facts
     set_fact:
       ansible_ssh_user: >-
         {% if ssh_user is defined %}{{ ssh_user }}
-        {%- elif _algo_ssh_user.user_input %}{{ _algo_ssh_user.user_input }}
+        {%- elif _ralgo_ssh_user.user_input %}{{ _ralgo_ssh_user.user_input }}
         {%- else %}root{% endif %}
   when: cloud_instance_ip != "localhost"
 

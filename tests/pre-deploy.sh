@@ -6,7 +6,7 @@ sysctl net.ipv6.conf.all.disable_ipv6=0
 
 tar xf $HOME/lxc/cache.tar -C / || echo "Didn't extract cache."
 cp -f tests/lxd-bridge /etc/default/lxd-bridge
-cp -f tests/algo.conf /etc/default/algo.conf
+cp -f tests/ralgo.conf /etc/default/ralgo.conf
 
 export REPOSITORY=${REPOSITORY:-${GITHUB_REPOSITORY}}
 export _BRANCH=${BRANCH#refs/heads/}
@@ -23,11 +23,11 @@ systemctl restart lxd-bridge.service lxd-containers.service lxd.service
 lxc profile set default raw.lxc lxc.aa_profile=unconfined
 lxc profile set default security.privileged true
 lxc profile show default
-lxc launch ubuntu:${UBUNTU_VERSION} algo
+lxc launch ubuntu:${UBUNTU_VERSION} ralgo
 
 ip addr
 
-until dig A +short algo.lxd @10.0.8.1 | grep -vE '^$' > /dev/null; do
+until dig A +short ralgo.lxd @10.0.8.1 | grep -vE '^$' > /dev/null; do
   sleep 3
 done
 

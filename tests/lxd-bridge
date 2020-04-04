@@ -1,7 +1,7 @@
 USE_LXD_BRIDGE="true"
 LXD_BRIDGE="lxdbr0"
 UPDATE_PROFILE="true"
-LXD_CONFILE="/etc/default/algo.conf"
+LXD_CONFILE="/etc/default/ralgo.conf"
 LXD_DOMAIN="lxd"
 LXD_IPV4_ADDR="10.0.8.1"
 LXD_IPV4_NETMASK="255.255.255.0"

@@ -1,5 +1,5 @@
 Port {{ ssh_port }}
-AllowGroups algo
+AllowGroups ralgo
 PermitRootLogin no
 PasswordAuthentication no
 ChallengeResponseAuthentication no

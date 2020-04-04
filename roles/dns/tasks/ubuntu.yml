@@ -49,7 +49,7 @@
 
 - name: Ubuntu | Add custom requirements to successfully start the unit
   copy:
-    dest: /etc/systemd/system/dnscrypt-proxy.service.d/99-algo.conf
+    dest: /etc/systemd/system/dnscrypt-proxy.service.d/99-ralgo.conf
     content: |
       [Unit]
       After=systemd-resolved.service
