@@ -6,7 +6,7 @@ ARG BUILD_PACKAGES="gcc libffi-dev linux-headers make musl-dev openssl-dev"
 
 LABEL name="ralgo" \
       version="${VERSION}" \
-      description="Set up a personal IPsec VPN in the cloud" \
+      description="Set up a personal WireGuard VPN in the cloud" \
       maintainer="Dorian8013 <http://github.com/Dorian8013/rAlgo>"
 
 RUN apk --no-cache add ${PACKAGES}

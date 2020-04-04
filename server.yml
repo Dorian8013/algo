@@ -55,16 +55,6 @@
         when: wireguard_enabled
         tags: wireguard
 
-      - import_role:
-          name: strongswan
-        when: ipsec_enabled
-        tags: ipsec
-
-      - import_role:
-          name: ssh_tunneling
-        when: ralgo_ssh_tunneling
-        tags: ssh_tunneling
-
       - block:
         - name: Dump the configuration
           copy:
@@ -78,19 +68,9 @@
               {% endif %}
               ralgo_provider: {{ ralgo_provider }}
               ralgo_server_name: {{ ralgo_server_name }}
-              ralgo_ondemand_cellular: {{ ralgo_ondemand_cellular }}
-              ralgo_ondemand_wifi: {{ ralgo_ondemand_wifi }}
-              ralgo_ondemand_wifi_exclude: {{ ralgo_ondemand_wifi_exclude }}
               ralgo_dns_adblocking: {{ ralgo_dns_adblocking }}
-              ralgo_ssh_tunneling: {{ ralgo_ssh_tunneling }}
-              ralgo_store_pki: {{ ralgo_store_pki }}
               IP_subject_alt_name: {{ IP_subject_alt_name }}
-              ipsec_enabled: {{ ipsec_enabled }}
               wireguard_enabled: {{ wireguard_enabled }}
-              {% if tests|default(false)|bool %}
-              ca_password: '{{ CA_password }}'
-              p12_password: '{{ p12_export_password }}'
-              {% endif %}
           become: false
           delegate_to: localhost
 
@@ -102,21 +82,9 @@
             force: true
           when: inventory_hostname == 'localhost'
 
-        - name: Import tmpfs tasks
-          import_tasks: playbooks/tmpfs/umount.yml
-          become: false
-          delegate_to: localhost
-          vars:
-            facts: "{{ hostvars['localhost'] }}"
-          when:
-            - pki_in_tmpfs
-            - not ralgo_store_pki
-
         - debug:
             msg:
               - "{{ congrats.common.split('\n') }}"
-              - "    {{ congrats.p12_pass if ralgo_ssh_tunneling or ipsec_enabled else '' }}"
-              - "    {{ congrats.ca_key_pass if ralgo_store_pki and ipsec_enabled else '' }}"
               - "    {{ congrats.ssh_access if ralgo_provider != 'local' else ''}}"
         tags: always
       rescue:

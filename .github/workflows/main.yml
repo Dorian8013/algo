@@ -57,8 +57,6 @@ jobs:
             libxml2-utils \
             crudini \
             fping \
-            strongswan \
-            libstrongswan-standard-plugins \
             resolvconf
 
           python3 -m pip install --upgrade pip
@@ -92,7 +90,6 @@ jobs:
         run: |
           set -x
           sudo -E bash -x ./tests/wireguard-client.sh
-          sudo env "PATH=$PATH" ./tests/ipsec-client.sh
 
   local-deploy:
     runs-on: ubuntu-16.04
@@ -128,8 +125,6 @@ jobs:
             libxml2-utils \
             crudini \
             fping \
-            strongswan \
-            libstrongswan-standard-plugins \
             resolvconf
 
           python3 -m pip install --upgrade pip
@@ -159,5 +154,3 @@ jobs:
         run: |
           set -x
           sudo bash -x ./tests/wireguard-client.sh
-          sudo env "PATH=$PATH" bash -x ./tests/ipsec-client.sh
-          sudo bash -x ./tests/ssh-tunnel.sh

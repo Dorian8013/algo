@@ -13,14 +13,8 @@
     ansible_python_interpreter: "/usr/bin/python3"
     ralgo_provider: "{{ ralgo_provider }}"
     ralgo_server_name: "{{ ralgo_server_name }}"
-    ralgo_ondemand_cellular: "{{ ralgo_ondemand_cellular }}"
-    ralgo_ondemand_wifi: "{{ ralgo_ondemand_wifi }}"
-    ralgo_ondemand_wifi_exclude: "{{ ralgo_ondemand_wifi_exclude }}"
     ralgo_dns_adblocking: "{{ ralgo_dns_adblocking }}"
-    ralgo_ssh_tunneling: "{{ ralgo_ssh_tunneling }}"
-    ralgo_store_pki: "{{ ralgo_store_pki }}"
     IP_subject_alt_name: "{{ IP_subject_alt_name }}"
-    alternative_ingress_ip: "{{ alternative_ingress_ip | default(omit) }}"
     cloudinit: "{{ cloudinit|default(false) }}"
 
 - name: Additional variables for the server
@@ -38,14 +32,6 @@
     timeout: 320
     state: present
   when: cloud_instance_ip != "localhost"
-
-- name: Mount tmpfs
-  import_tasks: tmpfs/main.yml
-  when:
-    - pki_in_tmpfs
-    - not ralgo_store_pki
-    - ansible_system == "Darwin" or
-      ansible_system == "Linux"
 
 - debug:
     var: IP_subject_alt_name

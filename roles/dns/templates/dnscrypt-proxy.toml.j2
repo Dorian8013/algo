@@ -30,7 +30,6 @@
 {# Allow either list to be empty. Output nothing if both are empty. #}
 {% set servers = [] %}
 {% if dnscrypt_servers.ipv4 %}{% set servers = dnscrypt_servers.ipv4 %}{% endif %}
-{% if ipv6_support and dnscrypt_servers.ipv6 %}{% set servers = servers + dnscrypt_servers.ipv6 %}{% endif %}
 {% if servers %}server_names = ['{{ servers | join("', '") }}']{% endif %}
 
 
@@ -38,8 +37,7 @@
 ## Note: When using systemd socket activation, choose an empty set (i.e. [] ).
 
 listen_addresses  = [
-  '{{ local_service_ip }}:53'{% if ipv6_support %},
-  '[{{ local_service_ipv6 }}]:53'{% endif %}
+  '{{ local_service_ip }}:53'
   ]
 
 
@@ -62,7 +60,7 @@ max_clients = 250
 ipv4_servers = true
 
 # Use servers reachable over IPv6 -- Do not enable if you don't have IPv6 connectivity
-ipv6_servers = {{ ipv6_support | bool | lower }}
+ipv6_servers = false
 
 # Use servers implementing the DNSCrypt protocol
 dnscrypt_servers = true
@@ -199,7 +197,7 @@ tls_disable_session_tickets = true
 ## People in China may need to use 114.114.114.114:53 here.
 ## Other popular options include 8.8.8.8 and 1.1.1.1.
 
-fallback_resolver = '{% if ansible_distribution == "FreeBSD" %}{{ ansible_dns.nameservers.0 }}:53{% else %}127.0.0.53:53{% endif %}'
+fallback_resolver = '127.0.0.53:53'
 
 
 ## Never let dnscrypt-proxy try to use the system DNS settings;

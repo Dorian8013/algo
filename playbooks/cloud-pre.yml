@@ -4,13 +4,7 @@
     shell: >
       ./ralgo-showenv.sh \
         'ralgo_provider "{{ ralgo_provider }}"' \
-        {% if ipsec_enabled %}
-        'ralgo_ondemand_cellular "{{ ralgo_ondemand_cellular }}"' \
-        'ralgo_ondemand_wifi "{{ ralgo_ondemand_wifi }}"' \
-        'ralgo_ondemand_wifi_exclude "{{ ralgo_ondemand_wifi_exclude }}"' \
-        {% endif %}
         'ralgo_dns_adblocking "{{ ralgo_dns_adblocking }}"' \
-        'ralgo_ssh_tunneling "{{ ralgo_ssh_tunneling }}"' \
         'wireguard_enabled "{{ wireguard_enabled }}"' \
         'dns_encryption "{{ dns_encryption }}"' \
         > /dev/tty

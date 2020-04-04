@@ -8,19 +8,12 @@
     - "{{ wireguard_pki_path }}/preshared"
     - "{{ wireguard_pki_path }}/private"
     - "{{ wireguard_pki_path }}/public"
-    - "{{ wireguard_config_path }}/apple/ios"
-    - "{{ wireguard_config_path }}/apple/macos"
   delegate_to: localhost
   become: false
 
 - name: Include tasks for Ubuntu
   include_tasks: ubuntu.yml
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-  tags: always
-
-- name: Include tasks for FreeBSD
-  include_tasks: freebsd.yml
-  when: ansible_distribution == 'FreeBSD'
   tags: always
 
 - name: Generate keys
@@ -51,13 +44,6 @@
       when: item.1 in users
       vars:
         index: "{{ item.0 }}"
-
-    - include_tasks: mobileconfig.yml
-      loop:
-        - ios
-        - macos
-      loop_control:
-        loop_var: system
 
     - name: Generate QR codes
       shell: >
@@ -90,15 +76,5 @@
     name: "{{ service_name }}"
     state: started
     enabled: true
-
-- name: Delete the PKI directory
-  file:
-    path: "{{ wireguard_pki_path }}"
-    state: absent
-  become: false
-  delegate_to: localhost
-  when:
-    - not ralgo_store_pki
-    - not pki_in_tmpfs
 
 - meta: flush_handlers

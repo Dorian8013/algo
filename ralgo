@@ -16,7 +16,6 @@ then
 fi
 
 case "$1" in
-  update-users) PLAYBOOK=users.yml; ARGS=( "${@:2}"  -t update-users ) ;;
   *) PLAYBOOK=main.yml; ARGS=( "${@}" ) ;;
 esac
 

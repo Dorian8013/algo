@@ -95,7 +95,7 @@
         value: 1
       - item: net.ipv4.conf.all.forwarding
         value: 1
-      - item: "{{ 'net.ipv6.conf.all.forwarding' if ipv6_support else none }}"
+      - item: net.ipv6.conf.all.disable_ipv6
         value: 1
 
 - name: Install tools
@@ -111,10 +111,6 @@
       - "linux-headers-{{ ansible_kernel }}"
     state: present
   when: install_headers
-
-- name: Configure the alternative ingress ip
-  include_tasks: aip/main.yml
-  when: alternative_ingress_ip
 
 - include_tasks: iptables.yml
   tags: iptables

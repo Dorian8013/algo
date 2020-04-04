@@ -4,7 +4,7 @@ Before you begin, make sure you have installed all the dependencies necessary fo
 
 You can deploy rAlgo non-interactively by running the Ansible playbooks directly with `ansible-playbook`.
 
-`ansible-playbook` accepts variables via the `-e` or `--extra-vars` option. You can pass variables as space separated key=value pairs. rAlgo requires certain variables that are listed below. You can also use the `--skip-tags` option to skip certain parts of the install, such as `iptables` (overwrite iptables rules), `ipsec` (install strongSwan), `wireguard` (install Wireguard). We don't recommend using the `-t` option as it will only include the tagged portions of the deployment, and skip certain necessary roles (such as `common`).
+`ansible-playbook` accepts variables via the `-e` or `--extra-vars` option. You can pass variables as space separated key=value pairs. rAlgo requires certain variables that are listed below. You can also use the `--skip-tags` option to skip certain parts of the install, such as `iptables` (overwrite iptables rules), `wireguard` (install Wireguard). We don't recommend using the `-t` option as it will only include the tagged portions of the deployment, and skip certain necessary roles (such as `common`).
 
 Here is a full example for DigitalOcean:
 
@@ -14,7 +14,6 @@ ansible-playbook main.yml -e "provider=digitalocean
                                 ondemand_cellular=false
                                 ondemand_wifi=false
                                 dns_adblocking=true
-                                ssh_tunneling=true
                                 store_pki=true
                                 region=ams3
                                 do_token=token"
@@ -26,12 +25,7 @@ See below for more information about variables and roles.
 
 - `provider` - (Required) The provider to use. See possible values below
 - `server_name` - (Required) Server name. Default: ralgo
-- `ondemand_cellular` (Optional) Enables VPN On Demand when connected to cellular networks for iOS/macOS clients using IPsec. Default: false
-- `ondemand_wifi` - (Optional. See `ondemand_wifi_exclude`) Enables VPN On Demand when connected to WiFi networks for iOS/macOS clients using IPsec. Default: false
-- `ondemand_wifi_exclude` (Required if `ondemand_wifi` set) - WiFi networks to exclude from using the VPN. Comma-separated values
 - `dns_adblocking` - (Optional) Enables dnscrypt-proxy adblocking. Default: false
-- `ssh_tunneling` - (Optional) Enable SSH tunneling for each user. Default: false
-- `store_pki` - (Optional) Whether or not keep the CA key (required to add users in the future, but less secure). Default: false
 
 If any of the above variables are unspecified, ansible will ask the user to input them.
 
@@ -54,17 +48,9 @@ Cloud roles:
 
 Server roles:
 
-- role: strongswan
-  * Installs [strongSwan](https://www.strongswan.org/)
-  * Enables AppArmor, limits CPU and memory access, and drops user privileges
-  * Builds a Certificate Authority (CA) with [easy-rsa-ipsec](https://github.com/ValdikSS/easy-rsa-ipsec) and creates one client certificate per user
-  * Bundles the appropriate certificates into Apple mobileconfig profiles for each user
 - role: dns_adblocking
   * Installs DNS encryption through [dnscrypt-proxy](https://github.com/jedisct1/dnscrypt-proxy) with blacklists to be updated daily from `adblock_lists` in `config.cfg` - note this will occur even if `dns_encryption` in `config.cfg` is set to `false`
   * Constrains dnscrypt-proxy with AppArmor and cgroups CPU and memory limitations
-- role: ssh_tunneling
-  * Adds a restricted `ralgo` group with no shell access and limited SSH forwarding options
-  * Creates one limited, local account and an SSH public key for each user
 - role: wireguard
   * Installs a [Wireguard](https://www.wireguard.com/) server, with a startup script, and automatic checks for upgrades
   * Creates wireguard.conf files for Linux clients as well as QR codes for Apple/Android clients
@@ -169,20 +155,3 @@ Additional variables:
     ]
 }
 ```
-
-### Update users
-
-Playbook:
-
-```
-users.yml
-```
-
-Required variables:
-
-- server - IP or hostname to access the server via SSH
-- ca_password - Password to access the CA key
-
-Tags required:
-
-- update-users
