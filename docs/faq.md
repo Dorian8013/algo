@@ -1,31 +1,31 @@
 # FAQ
 
-* [Has Algo been audited?](#has-algo-been-audited)
+* [Has rAlgo been audited?](#has-ralgo-been-audited)
 * [What's the current status of WireGuard?](#whats-the-current-status-of-wireguard)
 * [Why aren't you using Tor?](#why-arent-you-using-tor)
 * [Why aren't you using Racoon, LibreSwan, or OpenSwan?](#why-arent-you-using-racoon-libreswan-or-openswan)
 * [Why aren't you using a memory-safe or verified IKE daemon?](#why-arent-you-using-a-memory-safe-or-verified-ike-daemon)
 * [Why aren't you using OpenVPN?](#why-arent-you-using-openvpn)
 * [Why aren't you using Alpine Linux, OpenBSD, or HardenedBSD?](#why-arent-you-using-alpine-linux-openbsd-or-hardenedbsd)
-* [I deployed an Algo server. Can you update it with new features?](#i-deployed-an-algo-server-can-you-update-it-with-new-features)
-* [Where did the name "Algo" come from?](#where-did-the-name-algo-come-from)
+* [I deployed an rAlgo server. Can you update it with new features?](#i-deployed-an-ralgo-server-can-you-update-it-with-new-features)
+* [Where did the name "rAlgo" come from?](#where-did-the-name-ralgo-come-from)
 * [Can DNS filtering be disabled?](#can-dns-filtering-be-disabled)
 * [Wasn't IPSEC backdoored by the US government?](#wasnt-ipsec-backdoored-by-the-us-government)
 * [What inbound ports are used?](#what-inbound-ports-are-used)
 * [How do I monitor user activity?](#how-do-i-monitor-user-activity)
 * [How do I reach another connected client?](#how-do-i-reach-another-connected-client)
 
-## Has Algo been audited?
+## Has rAlgo been audited?
 
-No. This project is under active development. We're happy to [accept and fix issues](https://github.com/trailofbits/algo/issues) as they are identified. Use Algo at your own risk. If you find a security issue of any severity, please [contact us on Slack](https://empireslacking.herokuapp.com).
+No. This project is under active development. We're happy to [accept and fix issues](https://github.com/Dorian8013/rAlgo/issues) as they are identified. Use rAlgo at your own risk. If you find a security issue of any severity, please [contact us on Slack](https://empireslacking.herokuapp.com).
 
 ## What's the current status of WireGuard?
 
-[WireGuard is a work in progress](https://www.wireguard.com/#work-in-progress). It has undergone [substantial](https://www.wireguard.com/formal-verification/) security review, however, its authors are appropriately cautious about its safety and the protocol is subject to change. As a result, WireGuard does not yet have a "stable" 1.0 release. Releases are tagged with their build date -- "0.0.YYYYMMDD" -- and users should be advised to apply new updates when they are available. Your Algo server will automatically upgrade and restart WireGuard from the [official WireGuard PPA for Ubuntu](https://launchpad.net/~wireguard/+archive/ubuntu/wireguard) by default.
+[WireGuard is a work in progress](https://www.wireguard.com/#work-in-progress). It has undergone [substantial](https://www.wireguard.com/formal-verification/) security review, however, its authors are appropriately cautious about its safety and the protocol is subject to change. As a result, WireGuard does not yet have a "stable" 1.0 release. Releases are tagged with their build date -- "0.0.YYYYMMDD" -- and users should be advised to apply new updates when they are available. Your rAlgo server will automatically upgrade and restart WireGuard from the [official WireGuard PPA for Ubuntu](https://launchpad.net/~wireguard/+archive/ubuntu/wireguard) by default.
 
 ## Why aren't you using Tor?
 
-The goal of this project is not to provide anonymity, but to ensure confidentiality of network traffic. Tor introduces new risks that are unsuitable for Algo's intended users. Namely, with Algo, users are in control over the gateway routing their traffic. With Tor, users are at the mercy of [actively](https://www.securityweek2016.tu-darmstadt.de/fileadmin/user_upload/Group_securityweek2016/pets2016/10_honions-sanatinia.pdf) [malicious](https://web.archive.org/web/20150705184539/https://chloe.re/2015/06/20/a-month-with-badonions/) [exit](https://community.fireeye.com/people/archit.mehta/blog/2014/11/18/onionduke-apt-malware-distributed-via-malicious-tor-exit-node) [nodes](https://www.wired.com/2010/06/wikileaks-documents/).
+The goal of this project is not to provide anonymity, but to ensure confidentiality of network traffic. Tor introduces new risks that are unsuitable for rAlgo's intended users. Namely, with rAlgo, users are in control over the gateway routing their traffic. With Tor, users are at the mercy of [actively](https://www.securityweek2016.tu-darmstadt.de/fileadmin/user_upload/Group_securityweek2016/pets2016/10_honions-sanatinia.pdf) [malicious](https://web.archive.org/web/20150705184539/https://chloe.re/2015/06/20/a-month-with-badonions/) [exit](https://community.fireeye.com/people/archit.mehta/blog/2014/11/18/onionduke-apt-malware-distributed-via-malicious-tor-exit-node) [nodes](https://www.wired.com/2010/06/wikileaks-documents/).
 
 ## Why aren't you using Racoon, LibreSwan, or OpenSwan?
 
@@ -43,21 +43,21 @@ OpenVPN does not have out-of-the-box client support on any major desktop or mobi
 
 Alpine Linux is not supported out-of-the-box by any major cloud provider. We are interested in supporting Free-, Open-, and HardenedBSD. Follow along or contribute to our BSD support in [this issue](https://github.com/trailofbits/algo/issues/35).
 
-## I deployed an Algo server. Can you update it with new features?
+## I deployed an rAlgo server. Can you update it with new features?
 
-No. By design, the Algo development team has no access to any Algo server that our users have deployed. We cannot modify the configuration, update the software, or sniff the traffic that goes through your personal Algo VPN server. This prevents scenarios where we are legally compelled or hacked to push down backdoored updates that surveil our users.
+No. By design, the rAlgo development team has no access to any rAlgo server that our users have deployed. We cannot modify the configuration, update the software, or sniff the traffic that goes through your personal rAlgo VPN server. This prevents scenarios where we are legally compelled or hacked to push down backdoored updates that surveil our users.
 
-As a result, once your Algo server has been deployed, it is yours to maintain. It will use unattended-upgrades by default to apply security and feature updates to Ubuntu, as well as to the core VPN software of strongSwan, dnscrypt-proxy and WireGuard. However, if you want to take advantage of new features available in the current release of Algo, then you have two options. You can use the [SSH administrative interface](/README.md#ssh-into-algo-server) to make the changes you want on your own or you can shut down the server and deploy a new one (recommended).
+As a result, once your rAlgo server has been deployed, it is yours to maintain. It will use unattended-upgrades by default to apply security and feature updates to Ubuntu, as well as to the core VPN software of strongSwan, dnscrypt-proxy and WireGuard. However, if you want to take advantage of new features available in the current release of rAlgo, then you have two options. You can use the [SSH administrative interface](/README.md#ssh-into-ralgo-server) to make the changes you want on your own or you can shut down the server and deploy a new one (recommended).
 
 As an extension of this rationale, most configuration options (other than users) available in `config.cfg` can only be set at the time of initial deployment.
 
-## Where did the name "Algo" come from?
+## Where did the name "rAlgo" come from?
 
-Algo is short for "Al Gore", the **V**ice **P**resident of **N**etworks everywhere for [inventing the Internet](https://www.youtube.com/watch?v=BnFJ8cHAlco).
+rAlgo is short for "[roaming] Al Gore", the **V**ice **P**resident of **N**etworks everywhere for [inventing the Internet](https://www.youtube.com/watch?v=BnFJ8cHAlco).
 
 ## Can DNS filtering be disabled?
 
-You can temporarily disable DNS filtering for all IPsec clients at once with the following workaround: SSH to your Algo server (using the 'shell access' command printed upon a successful deployment), edit `/etc/ipsec.conf`, and change `rightdns=<random_ip>` to `rightdns=8.8.8.8`. Then run `sudo systemctl restart strongswan`. DNS filtering for WireGuard clients has to be disabled on each client device separately by modifying the settings in the app, or by directly modifying the `DNS` setting on the `clientname.conf` file. If all else fails, we recommend deploying a new Algo server without the adblocking feature enabled.
+You can temporarily disable DNS filtering for all IPsec clients at once with the following workaround: SSH to your rAlgo server (using the 'shell access' command printed upon a successful deployment), edit `/etc/ipsec.conf`, and change `rightdns=<random_ip>` to `rightdns=8.8.8.8`. Then run `sudo systemctl restart strongswan`. DNS filtering for WireGuard clients has to be disabled on each client device separately by modifying the settings in the app, or by directly modifying the `DNS` setting on the `clientname.conf` file. If all else fails, we recommend deploying a new rAlgo server without the adblocking feature enabled.
 
 ## Wasn't IPSEC backdoored by the US government?
 
@@ -81,12 +81,12 @@ No.
 
 ## What inbound ports are used?
 
-You should only need 4160/TCP, 500/UDP, 4500/UDP, and 51820/UDP opened on any firewall that sits between your clients and your Algo server. See [AlgoVPN and Firewalls](/docs/firewalls.md) for more information.
+You should only need 4160/TCP, and 51820/UDP opened on any firewall that sits between your clients and your rAlgo server. See [rAlgoVPN and Firewalls](/docs/firewalls.md) for more information.
 
 ## How do I monitor user activity?
 
-Your Algo server will track IPsec client logins by default in `/var/log/syslog`. This will give you client names, date/time of connection and reconnection, and what IP addresses they're connecting from. This can be disabled entirely by setting `strongswan_log_level` to `-1` in `config.cfg`. WireGuard doesn't save any logs, but entering `sudo wg` on the server will give you the last endpoint and contact time of each client. Disabling this is [paradoxically difficult](https://git.zx2c4.com/blind-operator-mode/about/). There isn't any out-of-the-box way to monitor actual user _activity_ (e.g. websites browsed, etc.)
+Your rAlgo server will track IPsec client logins by default in `/var/log/syslog`. This will give you client names, date/time of connection and reconnection, and what IP addresses they're connecting from. This can be disabled entirely by setting `strongswan_log_level` to `-1` in `config.cfg`. WireGuard doesn't save any logs, but entering `sudo wg` on the server will give you the last endpoint and contact time of each client. Disabling this is [paradoxically difficult](https://git.zx2c4.com/blind-operator-mode/about/). There isn't any out-of-the-box way to monitor actual user _activity_ (e.g. websites browsed, etc.)
 
 ## How do I reach another connected client?
 
-By default, your Algo server doesn't allow connections between connected clients. This can be changed at the time of deployment by enabling the `BetweenClients_DROP` flag in `config.cfg`. See the ["Road Warrior" instructions](/docs/deploy-to-ubuntu.md#road-warrior-setup) for more details.
+By default, your rAlgo server doesn't allow connections between connected clients. This can be changed at the time of deployment by enabling the `BetweenClients_DROP` flag in `config.cfg`.

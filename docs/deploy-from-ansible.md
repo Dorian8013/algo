@@ -2,15 +2,15 @@
 
 Before you begin, make sure you have installed all the dependencies necessary for your operating system as described in the [README](../README.md).
 
-You can deploy Algo non-interactively by running the Ansible playbooks directly with `ansible-playbook`.
+You can deploy rAlgo non-interactively by running the Ansible playbooks directly with `ansible-playbook`.
 
-`ansible-playbook` accepts variables via the `-e` or `--extra-vars` option. You can pass variables as space separated key=value pairs. Algo requires certain variables that are listed below. You can also use the `--skip-tags` option to skip certain parts of the install, such as `iptables` (overwrite iptables rules), `ipsec` (install strongSwan), `wireguard` (install Wireguard). We don't recommend using the `-t` option as it will only include the tagged portions of the deployment, and skip certain necessary roles (such as `common`).
+`ansible-playbook` accepts variables via the `-e` or `--extra-vars` option. You can pass variables as space separated key=value pairs. rAlgo requires certain variables that are listed below. You can also use the `--skip-tags` option to skip certain parts of the install, such as `iptables` (overwrite iptables rules), `ipsec` (install strongSwan), `wireguard` (install Wireguard). We don't recommend using the `-t` option as it will only include the tagged portions of the deployment, and skip certain necessary roles (such as `common`).
 
 Here is a full example for DigitalOcean:
 
 ```shell
 ansible-playbook main.yml -e "provider=digitalocean
-                                server_name=algo
+                                server_name=ralgo
                                 ondemand_cellular=false
                                 ondemand_wifi=false
                                 dns_adblocking=true
@@ -25,7 +25,7 @@ See below for more information about variables and roles.
 ### Variables
 
 - `provider` - (Required) The provider to use. See possible values below
-- `server_name` - (Required) Server name. Default: algo
+- `server_name` - (Required) Server name. Default: ralgo
 - `ondemand_cellular` (Optional) Enables VPN On Demand when connected to cellular networks for iOS/macOS clients using IPsec. Default: false
 - `ondemand_wifi` - (Optional. See `ondemand_wifi_exclude`) Enables VPN On Demand when connected to WiFi networks for iOS/macOS clients using IPsec. Default: false
 - `ondemand_wifi_exclude` (Required if `ondemand_wifi` set) - WiFi networks to exclude from using the VPN. Comma-separated values
@@ -63,7 +63,7 @@ Server roles:
   * Installs DNS encryption through [dnscrypt-proxy](https://github.com/jedisct1/dnscrypt-proxy) with blacklists to be updated daily from `adblock_lists` in `config.cfg` - note this will occur even if `dns_encryption` in `config.cfg` is set to `false`
   * Constrains dnscrypt-proxy with AppArmor and cgroups CPU and memory limitations
 - role: ssh_tunneling
-  * Adds a restricted `algo` group with no shell access and limited SSH forwarding options
+  * Adds a restricted `ralgo` group with no shell access and limited SSH forwarding options
   * Creates one limited, local account and an SSH public key for each user
 - role: wireguard
   * Installs a [Wireguard](https://www.wireguard.com/) server, with a startup script, and automatic checks for upgrades
@@ -87,15 +87,6 @@ This role is intended to be run for local install onto an Ubuntu server, or onto
 - ca_password - Password for the private CA key
 
 Note that by default, the iptables rules on your existing server will be overwritten. If you don't want to overwrite the iptables rules, you can use the `--skip-tags iptables` flag.
-
-### Digital Ocean
-
-Required variables:
-
-- do_token
-- region
-
-Possible options can be gathered calling to https://api.digitalocean.com/v2/regions
 
 ### Amazon EC2
 
@@ -178,91 +169,6 @@ Additional variables:
     ]
 }
 ```
-
-### Google Compute Engine
-
-Required variables:
-
-- gce_credentials_file: e.g. /configs/gce.json if you use the [GCE docs](https://trailofbits.github.io/algo/cloud-gce.html) - can also be defined in environment as GCE_CREDENTIALS_FILE_PATH
-- [region](https://cloud.google.com/compute/docs/regions-zones/): e.g. `useast-1`
-
-### Vultr
-
-Required variables:
-
-- [vultr_config](https://trailofbits.github.io/algo/cloud-vultr.html): /path/to/.vultr.ini
-- [region](https://api.vultr.com/v1/regions/list): e.g. `Chicago`, `'New Jersey'`
-
-### Azure
-
-Required variables:
-
-- azure_secret
-- azure_tenant
-- azure_client_id
-- azure_subscription_id
-- [region](https://azure.microsoft.com/en-us/global-infrastructure/regions/)
-
-### Lightsail
-
-Required variables:
-
-- aws_access_key: `AKIA...`
-- aws_secret_key
-- region: e.g. `us-east-1`
-
-Possible options can be gathered via cli `aws lightsail get-regions`
-
-#### Minimum required IAM permissions for deployment:
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "LightsailDeployment",
-            "Effect": "Allow",
-            "Action": [
-                "lightsail:GetRegions",
-                "lightsail:GetInstance",
-                "lightsail:CreateInstances",
-                "lightsail:OpenInstancePublicPorts"
-            ],
-            "Resource": [
-                "*"
-            ]
-        }
-    ]
-}
-```
-
-### Scaleway
-
-Required variables:
-
-- [scaleway_token](https://www.scaleway.com/docs/generate-an-api-token/)
-- region: e.g. `ams1`, `par1`
-
-### OpenStack
-
-You need to source the rc file prior to run Algo. Download it from the OpenStack dashboard->Compute->API Access and source it in the shell (eg: source /tmp/dhc-openrc.sh)
-
-### CloudStack
-
-Required variables:
-
-- [cs_config](https://trailofbits.github.io/algo/cloud-cloudstack.html): /path/to/.cloudstack.ini
-- cs_region: e.g. `exoscale`
-- cs_zones: e.g. `ch-gva2`
-
-The first two can also be defined in your environment, using the variables `CLOUDSTACK_CONFIG` and `CLOUDSTACK_REGION`.
-
-### Hetzner
-
-Required variables:
-
-- hcloud_token: Your [API token](https://trailofbits.github.io/algo/cloud-hetzner.html#api-token) - can also be defined in the environment as HCLOUD_TOKEN
-- region: e.g. `nbg1`
 
 ### Update users
 

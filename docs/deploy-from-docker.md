@@ -1,44 +1,44 @@
 # Docker Support
 
-While it is not possible to run your Algo server from within a Docker container, it is possible to use Docker to provision your Algo server.
+While it is not possible to run your rAlgo server from within a Docker container, it is possible to use Docker to provision your rAlgo server.
 
 ## Limitations
 
 1. This has not yet been tested with user namespacing enabled.
 2. If you're running this on Windows, take care when editing files under `configs/` to ensure that line endings are set appropriately for Unix systems.
 
-## Deploying an Algo Server with Docker
+## Deploying an rAlgo Server with Docker
 
 1. Install [Docker](https://www.docker.com/community-edition#/download) --  setup and configuration is not covered here
-2. Create a local directory to hold your VPN configs (e.g. `C:\Users\trailofbits\Documents\VPNs\`)
-3. Create a local copy of [config.cfg](https://github.com/trailofbits/algo/blob/master/config.cfg), with required modifications (e.g. `C:\Users\trailofbits\Documents\VPNs\config.cfg`)
-4. Run the Docker container, mounting your configurations appropriately (assuming the container is named `trailofbits/algo` with a tag `latest`):
+2. Create a local directory to hold your VPN configs (e.g. `C:\Users\[USER]\Documents\VPNs\`)
+3. Create a local copy of [config.cfg](https://github.com/Dorian8013/rAlgo/blob/master/config.cfg), with required modifications (e.g. `C:\Users\[USER]\Documents\VPNs\config.cfg`)
+4. Run the Docker container, mounting your configurations appropriately (assuming the container is named `dorian8013/ralgo` with a tag `latest`):
   - From Windows:
    ```powershell
    C:\Users\trailofbits> docker run --cap-drop=all -it \
-     -v C:\Users\trailofbits\Documents\VPNs:/data \
-     trailofbits/algo:latest
+     -v C:\Users\[USER]\Documents\VPNs:/data \
+     dorian8013/rAlgo:latest
    ```
   - From Linux:
   ```bash
   $ docker run --cap-drop=all -it \
-    -v /home/trailofbits/Documents/VPNs:/data \
-    trailofbits/algo:latest
+    -v /home/[USER]/Documents/VPNs:/data \
+    dorian8013/rAlgo:latest
   ```
 5. When it exits, you'll be left with a fully populated `configs` directory, containing all appropriate configuration data for your clients, and for future server management
 
 ### Providing Additional Files
-If you need to provide additional files -- like authorization files for Google Cloud Project -- you can simply specify an additional `-v` parameter, and provide the appropriate path when prompted by `algo`.
+If you need to provide additional files -- like authorization files for Google Cloud Project -- you can simply specify an additional `-v` parameter, and provide the appropriate path when prompted by `ralgo`.
 
-For example, you can specify `-v C:\Users\trailofbits\Documents\VPNs\gce_auth.json:/algo/gce_auth.json`, making the local path to your credentials JSON file `/algo/gce_auth.json`.
+For example, you can specify `-v C:\Users\[USER]\Documents\VPNs\gce_auth.json:/ralgo/gce_auth.json`, making the local path to your credentials JSON file `/ralgo/gce_auth.json`.
 
 ### Scripted deployment
-Ansible variables (see [Deployment from Ansible](deploy-from-ansible.md)) can be passed via `ALGO_ARGS` environment variable.
+Ansible variables (see [Deployment from Ansible](deploy-from-ansible.md)) can be passed via `RALGO_ARGS` environment variable.
 _The leading `-e` (or `--extra-vars`) is required_, e.g.
 ```bash
-$ ALGO_ARGS="-e
+$ RALGO_ARGS="-e
     provider=digitalocean
-    server_name=algo
+    server_name=ralgo
     ondemand_cellular=false
     ondemand_wifi=false
     dns_adblocking=true
@@ -48,21 +48,21 @@ $ ALGO_ARGS="-e
     do_token=token"
 
 $ docker run --cap-drop=all -it \
-    -e "ALGO_ARGS=$ALGO_ARGS" \
+    -e "RALGO_ARGS=$RALGO_ARGS" \
     -v /home/trailofbits/Documents/VPNs:/data \
-    trailofbits/algo:latest
+    dorian8013/rAlgo:latest
 ```
 
-## Managing an Algo Server with Docker
+## Managing an rAlgo Server with Docker
 
-Even though the container itself is transient, because you've persisted the configuration data, you can use the same Docker image to manage your Algo server. This is done by setting the environment variable `ALGO_ARGS`.
+Even though the container itself is transient, because you've persisted the configuration data, you can use the same Docker image to manage your rAlgo server. This is done by setting the environment variable `RALGO_ARGS`.
 
-If you want to use Algo to update the users on an existing server, specify `-e "ALGO_ARGS=update-users"` in your `docker run` command:
+If you want to use rAlgo to update the users on an existing server, specify `-e "RALGO_ARGS=update-users"` in your `docker run` command:
 ```powershell
 $ docker run --cap-drop=all -it \
-  -e "ALGO_ARGS=update-users" \
+  -e "RALGO_ARGS=update-users" \
   -v C:\Users\trailofbits\Documents\VPNs:/data \
-  trailofbits/algo:latest
+  dorian8013/rAlgo:latest
 ```
 
 ## GNU Makefile for Docker
@@ -78,7 +78,7 @@ You can use the Dockerfile provided in this repository as-is, or modify it to su
 
 ## Security Considerations
 
-Using Docker is largely no different from running Algo yourself, with a couple of notable exceptions: we run as root within the container, and you're retrieving your content from Docker Hub.
+Using Docker is largely no different from running rAlgo yourself, with a couple of notable exceptions: we run as root within the container, and you're retrieving your content from Docker Hub.
 
 To work around the limitations of bind mounts in docker, we have to run as root within the container. To mitigate concerns around doing this, we pass the `--cap-drop=all` parameter to `docker run`, which effectively removes all privileges from the root account, reducing it to a generic user account that happens to have a userid of 0. Further steps can be taken by applying `seccomp` profiles to the container; this is being considered as a future improvement.
 
@@ -87,7 +87,7 @@ Docker themselves provide a concept of [Content Trust](https://docs.docker.com/e
 ## Future Improvements
 
 1. Even though we're taking care to drop all capabilities to minimize the impact of running as root, we can probably include not only a `seccomp` profile, but also AppArmor and/or SELinux profiles as well.
-2. The Docker image doesn't natively support [advanced](deploy-from-ansible.md) Algo deployments, which is useful for scripting. This can be done by launching an interactive shell and running the commands yourself.
+2. The Docker image doesn't natively support [advanced](deploy-from-ansible.md) rAlgo deployments, which is useful for scripting. This can be done by launching an interactive shell and running the commands yourself.
 3. The way configuration is passed into and out of the container is a bit kludgy. Hopefully future improvements in Docker volumes will make this a bit easier to handle.
 
 ## Advanced Usage

@@ -2,7 +2,7 @@
 
 ## Install WireGuard
 
-To connect to your AlgoVPN using [WireGuard](https://www.wireguard.com) from Ubuntu, first install WireGuard:
+To connect to your rAlgoVPN using [WireGuard](https://www.wireguard.com) from Ubuntu, first install WireGuard:
 
 ```shell
 # Ubuntu 19.04 and earlier:
@@ -21,7 +21,7 @@ For installation on other Linux distributions, see the [Installation](https://ww
 
 ## Locate the Config File
 
-The Algo-generated config files for WireGuard are named `configs/<ip_address>/wireguard/<username>.conf` on the system where you ran `./algo`. One file was generated for each of the users you added to `config.cfg`. Each WireGuard client you connect to your AlgoVPN must use a different config file. Choose one of these files and copy it to your Linux client.
+The rAlgo-generated config files for WireGuard are named `configs/<ip_address>/wireguard/<username>.conf` on the system where you ran `./ralgo`. One file was generated for each of the users you added to `config.cfg`. Each WireGuard client you connect to your rAlgoVPN must use a different config file. Choose one of these files and copy it to your Linux client.
 
 ## Configure WireGuard
 
@@ -38,10 +38,10 @@ sudo systemctl start wg-quick@wg0
 # Check that it started properly:
 sudo systemctl status wg-quick@wg0
 
-# Verify the connection to the AlgoVPN:
+# Verify the connection to the rAlgoVPN:
 sudo wg
 
-# See that your client is using the IP address of your AlgoVPN:
+# See that your client is using the IP address of your rAlgoVPN:
 curl ipv4.icanhazip.com
 
 # Optionally configure the connection to come up at boot time:

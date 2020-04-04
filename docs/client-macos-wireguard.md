@@ -12,9 +12,9 @@ brew install wireguard-tools
 
 ## Locate the Config File
 
-Algo generates a WireGuard configuration file, `wireguard/<username>.conf`, and a QR code, `wireguard/<username>.png`, for each user defined in `config.cfg`. Find the configuration file and copy it to your device if you don't already have it.
+rAlgo generates a WireGuard configuration file, `wireguard/<username>.conf`, and a QR code, `wireguard/<username>.png`, for each user defined in `config.cfg`. Find the configuration file and copy it to your device if you don't already have it.
 
-Note that each client you use to connect to Algo VPN must have a unique WireGuard config.
+Note that each client you use to connect to rAlgoVPN must have a unique WireGuard config.
 
 ## Configure WireGuard
 
@@ -28,9 +28,9 @@ cp <username>.conf /usr/local/etc/wireguard/wg0.conf
 # Start the WireGuard VPN
 sudo wg-quick up wg0
 
-# Verify the connection to the Algo VPN
+# Verify the connection to the rAlgoVPN
 wg
 
-# See that your client is using the IP address of your Algo VPN:
+# See that your client is using the IP address of your rAlgoVPN:
 curl ipv4.icanhazip.com
 ```
