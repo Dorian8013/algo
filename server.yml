@@ -63,7 +63,9 @@
               server: {{ 'localhost' if inventory_hostname == 'localhost' else inventory_hostname }}
               server_user: {{ ansible_ssh_user }}
               ansible_ssh_port: "{{ ansible_ssh_port|default(22) }}"
+              {% if ralgo_provider != "local" %}
               ansible_ssh_private_key_file: {{ SSH_keys.private }}
+              {% endif %}
               ralgo_provider: {{ ralgo_provider }}
               ralgo_server_name: {{ ralgo_server_name }}
               ralgo_dns_adblocking: {{ ralgo_dns_adblocking }}

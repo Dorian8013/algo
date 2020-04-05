@@ -13,7 +13,7 @@
 
       - name: Include a provisioning role
         include_role:
-          name: "{{ 'cloud-' + ralgo_provider }}"
+          name: "{{ 'local' if ralgo_provider == 'local' else 'cloud-' + ralgo_provider }}"
 
       - name: Local post-tasks
         import_tasks: playbooks/cloud-post.yml

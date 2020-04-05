@@ -8,6 +8,7 @@
       dns_adblocking: false
     providers_map:
       - { name: Amazon EC2, alias: ec2 }
+      - { name: "Install to existing Ubuntu 18.04 or 19.10 server (for more advanced users)", alias: local }
   vars_files:
     - config.cfg
 
@@ -37,6 +38,7 @@
         register: _ralgo_server_name
         when:
           - server_name is undefined
+          - ralgo_provider != "local"
 
       - name: DNS adblocking prompt
         pause:

@@ -23,7 +23,7 @@ jobs:
         run: |
           /snap/bin/shellcheck ralgo install.sh
           ansible-playbook main.yml --syntax-check
-          ansible-lint -v *.yml roles/{cloud-*}/*/*.yml
+          ansible-lint -v *.yml roles/{local,cloud-*}/*/*.yml
 
   scripted-deploy:
     runs-on: ubuntu-16.04
@@ -90,3 +90,66 @@ jobs:
         run: |
           set -x
           sudo -E bash -x ./tests/wireguard-client.sh
+
+  local-deploy:
+    runs-on: ubuntu-16.04
+    strategy:
+      matrix:
+        UBUNTU_VERSION: ["18.04", "19.10"]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.7'
+
+      - name: Install dependencies
+        run: |
+          set -x
+          sudo add-apt-repository -yu ppa:wireguard/wireguard
+          sudo add-apt-repository -yu ppa:ubuntu-lxc/stable
+          sudo apt update -y
+          sudo apt install -y \
+            python3-pip \
+            lxd \
+            expect-dev \
+            debootstrap \
+            tree \
+            bridge-utils \
+            dnsutils \
+            build-essential \
+            libssl-dev \
+            libffi-dev \
+            python3-dev \
+            linux-headers-$(uname -r) \
+            wireguard \
+            libxml2-utils \
+            crudini \
+            fping \
+            resolvconf
+
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt
+
+      - name: Provision
+        env:
+          DEPLOY: docker
+          UBUNTU_VERSION: ${{ matrix.UBUNTU_VERSION }}
+          REPOSITORY: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+          BRANCH: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref }}
+        run: |
+          ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
+          sed -i "s/^reduce_mtu:\s0$/reduce_mtu: 80/" config.cfg
+          sudo -E ./tests/pre-deploy.sh
+
+      - name: Deployment
+        env:
+          DEPLOY: docker
+          UBUNTU_VERSION: ${{ matrix.UBUNTU_VERSION }}
+        run: |
+          docker build -t local/ralgo .
+          ./tests/local-deploy.sh
+
+      - name: Tests
+        run: |
+          set -x
+          sudo bash -x ./tests/wireguard-client.sh

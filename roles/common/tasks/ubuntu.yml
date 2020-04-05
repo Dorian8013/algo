@@ -34,6 +34,7 @@
         timeout: 320
       when: reboot_required is defined and reboot_required.stdout == 'required'
       become: false
+  when: ralgo_provider != "local"
 
 - name: Include unatteded upgrades configuration
   import_tasks: unattended-upgrades.yml
