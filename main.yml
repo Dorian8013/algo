@@ -35,7 +35,7 @@
         msg: >
           Python version is not supported.
           You must upgrade to at least Python 3.6 to use this version of rAlgo.
-          See for more details - https://dorian8013.github.io/ralgo/troubleshooting.html#python-version-is-not-supported
+          See for more details - https://rhdsx.github.io/ralgo/troubleshooting.html#python-version-is-not-supported
 
     - name: Verify Ansible meets rAlgo VPN requirements
       assert:

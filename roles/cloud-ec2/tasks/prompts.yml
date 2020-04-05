@@ -2,7 +2,7 @@
 - pause:
     prompt: |
       Enter your aws_access_key (http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html)
-      Note: Make sure to use an IAM user with an acceptable policy attached (see https://github.com/dorian8013/ralgo/blob/master/docs/deploy-from-ansible.md)
+      Note: Make sure to use an IAM user with an acceptable policy attached (see https://github.com/rhdsx/ralgo/blob/master/docs/deploy-from-ansible.md)
     echo: false
   register: _aws_access_key
   when:

@@ -16,7 +16,7 @@ As of the time of this writing (July 2018), the Free Tier limits include "750 ho
 
 In the AWS console, find the policies menu: click Services > IAM > Policies. Click Create Policy.
 
-Here, you have the policy editor. Switch to the JSON tab and copy-paste over the existing empty policy with [the minimum required AWS policy needed for rAlgo deployment](https://github.com/Dorian8013/rAlgo/blob/master/docs/deploy-from-ansible.md#minimum-required-iam-permissions-for-deployment).
+Here, you have the policy editor. Switch to the JSON tab and copy-paste over the existing empty policy with [the minimum required AWS policy needed for rAlgo deployment](https://github.com/rhdsx/ralgo/blob/master/docs/deploy-from-ansible.md#minimum-required-iam-permissions-for-deployment).
 
 ![Creating a new permissions policy in the AWS console.](/docs/images/aws-ec2-new-policy.png)
 
@@ -65,7 +65,7 @@ Next you will be asked for the AWS Access Key (Access Key ID) and AWS Secret Key
 
 ```
 Enter your aws_access_key (http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html)
-Note: Make sure to use an IAM user with an acceptable policy attached (see https://github.com/Dorian8013/rAlgo/blob/master/docs/deploy-from-ansible.md).
+Note: Make sure to use an IAM user with an acceptable policy attached (see https://github.com/rhdsx/ralgo/blob/master/docs/deploy-from-ansible.md).
 [pasted values will not be displayed]
 [AKIA...]: 
 

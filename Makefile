@@ -1,7 +1,7 @@
 ## docker-build: Build and tag a docker image
 .PHONY: docker-build
 
-IMAGE          := dorian8013/ralgo
+IMAGE          := rhdsx/ralgo
 TAG	  	       := latest
 DOCKERFILE     := Dockerfile
 CONFIGURATIONS := $(shell pwd)

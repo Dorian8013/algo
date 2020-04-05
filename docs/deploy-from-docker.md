@@ -11,19 +11,19 @@ While it is not possible to run your rAlgo server from within a Docker container
 
 1. Install [Docker](https://www.docker.com/community-edition#/download) --  setup and configuration is not covered here
 2. Create a local directory to hold your VPN configs (e.g. `C:\Users\[USER]\Documents\VPNs\`)
-3. Create a local copy of [config.cfg](https://github.com/Dorian8013/rAlgo/blob/master/config.cfg), with required modifications (e.g. `C:\Users\[USER]\Documents\VPNs\config.cfg`)
-4. Run the Docker container, mounting your configurations appropriately (assuming the container is named `dorian8013/ralgo` with a tag `latest`):
+3. Create a local copy of [config.cfg](https://github.com/rhdsx/ralgo/blob/master/config.cfg), with required modifications (e.g. `C:\Users\[USER]\Documents\VPNs\config.cfg`)
+4. Run the Docker container, mounting your configurations appropriately (assuming the container is named `rhdsx/ralgo` with a tag `latest`):
   - From Windows:
    ```powershell
    C:\Users\[USER]> docker run --cap-drop=all -it \
      -v C:\Users\[USER]\Documents\VPNs:/data \
-     dorian8013/rAlgo:latest
+     rhdsx/ralgo:latest
    ```
   - From Linux:
   ```bash
   $ docker run --cap-drop=all -it \
     -v /home/[USER]/Documents/VPNs:/data \
-    dorian8013/rAlgo:latest
+    rhdsx/ralgo:latest
   ```
 5. When it exits, you'll be left with a fully populated `configs` directory, containing all appropriate configuration data for your clients, and for future server management
 
@@ -46,7 +46,7 @@ $ RALGO_ARGS="-e
 $ docker run --cap-drop=all -it \
     -e "RALGO_ARGS=$RALGO_ARGS" \
     -v /home/[USER]/Documents/VPNs:/data \
-    dorian8013/rAlgo:latest
+    rhdsx/ralgo:latest
 ```
 
 ## Managing an rAlgo Server with Docker
@@ -58,7 +58,7 @@ If you want to use rAlgo to update the users on an existing server, specify `-e 
 $ docker run --cap-drop=all -it \
   -e "RALGO_ARGS=update-users" \
   -v C:\Users\[USER]\Documents\VPNs:/data \
-  dorian8013/rAlgo:latest
+  rhdsx/ralgo:latest
 ```
 
 ## GNU Makefile for Docker

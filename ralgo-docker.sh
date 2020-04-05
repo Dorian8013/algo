@@ -11,7 +11,7 @@ usage() {
     retcode="${1:-0}"
     echo "To run ralgo from Docker:"
     echo ""
-    echo "docker run --cap-drop=all -it -v <path to configurations>:"${DATA_DIR}" dorian8013/ralgo:latest"
+    echo "docker run --cap-drop=all -it -v <path to configurations>:"${DATA_DIR}" rhdsx/ralgo:latest"
     echo ""
     exit ${retcode}
 }

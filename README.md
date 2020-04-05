@@ -1,6 +1,6 @@
 # rAlgo VPN
 
-[![Main branch build status](https://github.com/Dorian8013/rAlgo/workflows/Main/badge.svg?branch=master)](https://github.com/Dorian8013/rAlgo/actions)
+[![Main branch build status](https://github.com/rhdsx/ralgo/workflows/Main/badge.svg?branch=master)](https://github.com/rhdsx/ralgo/actions)
 
 rAlgo VPN is a set of Terraform and Ansible scripts that simplify the setup of a personal, roaming WireGuard VPN. It uses the most secure defaults available and works with Amazon EC2.
 
@@ -36,9 +36,9 @@ The easiest way to get an rAlgo server running is to run it on your local system
 
 2. **Get a copy of rAlgo.** The rAlgo scripts will be installed on your local system. There are two ways to get a copy:
 
-    - Download the [ZIP file](https://github.com/Dorian8013/rAlgo/archive/master.zip). Unzip the file to create a directory named `ralgo-master` containing the rAlgo scripts.
+    - Download the [ZIP file](https://github.com/rhdsx/ralgo/archive/master.zip). Unzip the file to create a directory named `ralgo-master` containing the rAlgo scripts.
 
-    - Run the command `git clone https://github.com/Dorian8013/rAlgo.git` to create a directory named `rAlgo` containing the rAlgo scripts.
+    - Run the command `git clone https://github.com/rhdsx/ralgo.git` to create a directory named `rAlgo` containing the rAlgo scripts.
 
 3. **Install rAlgo's core dependencies.** rAlgo requires that **Python 3.6 or later** and at least one supporting package are installed on your system.
 
@@ -64,7 +64,7 @@ The easiest way to get an rAlgo server running is to run it on your local system
     ```
     On Fedora add the option `--system-site-packages` to the first command above. On macOS install the C compiler if prompted.
 
-5. **Set your configuration options.** Open the file `config.cfg` in your favorite text editor. Specify the users you wish to create in the `users` list. Create a unique user for each device you plan to connect to your VPN. You should also review the other options before deployment, as changing your mind about them later [may require you to deploy a brand new server](https://github.com/Dorian8013/rAlgo/blob/master/docs/faq.md#i-deployed-an-ralgo-server-can-you-update-it-with-new-features).
+5. **Set your configuration options.** Open the file `config.cfg` in your favorite text editor. Specify the users you wish to create in the `users` list. Create a unique user for each device you plan to connect to your VPN. You should also review the other options before deployment, as changing your mind about them later [may require you to deploy a brand new server](https://github.com/rhdsx/ralgo/blob/master/docs/faq.md#i-deployed-an-ralgo-server-can-you-update-it-with-new-features).
 
 6. **Start the deployment.** Return to your terminal. In the rAlgo directory, run `./ralgo` and follow the instructions. There are several optional features available. None are required for a fully functional VPN server. These optional features are described in greater detail in [here](docs/deploy-from-ansible.md).
 

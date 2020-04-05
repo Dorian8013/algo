@@ -56,7 +56,7 @@ echo "rAlgo running on: ${OS}${VIRTUALIZED}"
 if [[ -d .git && -x $(command -v git) ]]; then
     ORIGIN="$(git remote get-url origin)"
     COMMIT="$(git log --max-count=1 --oneline --no-decorate --no-color)"
-    if [[ ${ORIGIN} == "https://github.com/Dorian8013/rAlgo.git" ]]; then
+    if [[ ${ORIGIN} == "https://github.com/rhdsx/ralgo.git" ]]; then
         SOURCE="clone"
     else
         SOURCE="fork"

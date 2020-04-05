@@ -1,6 +1,6 @@
 # Troubleshooting
 
-First of all, check [this](https://github.com/Dorian8013/rAlgo#features) and ensure that you are deploying to the supported ubuntu version.
+First of all, check [this](https://github.com/rhdsx/ralgo#features) and ensure that you are deploying to the supported ubuntu version.
 
   * [Installation Problems](#installation-problems)
      * [Error: "You have not agreed to the Xcode license agreements"](#error-you-have-not-agreed-to-the-xcode-license-agreements)
@@ -115,7 +115,7 @@ You are running an old version of `pip` that cannot download the binary `cryptog
 
 You tried to install rAlgo and you see an error that reads "ansible-playbook: command not found."
 
-You did not finish step 4 in the installation instructions, "[Install rAlgo's remaining dependencies](https://github.com/Dorian8013/rAlgo#deploy-the-ralgo-server)." rAlgo depends on [Ansible](https://github.com/ansible/ansible), an automation framework, and this error indicates that you do not have Ansible installed. Ansible is installed by `pip` when you run `python3 -m pip install -r requirements.txt`. You must complete the installation instructions to run the rAlgo server deployment process.
+You did not finish step 4 in the installation instructions, "[Install rAlgo's remaining dependencies](https://github.com/rhdsx/ralgo#deploy-the-ralgo-server)." rAlgo depends on [Ansible](https://github.com/ansible/ansible), an automation framework, and this error indicates that you do not have Ansible installed. Ansible is installed by `pip` when you run `python3 -m pip install -r requirements.txt`. You must complete the installation instructions to run the rAlgo server deployment process.
 
 ### Fatal: "Failed to validate the SSL certificate"
 
@@ -156,7 +156,7 @@ You need to reset the permissions on your `.ssh` directory. Run `chmod 700 /home
 
 rAlgo downloads the regions from the supported cloud providers (other than Microsoft Azure) listed in the first menu using APIs. If the region you want isn't available, the cloud provider has probably taken it offline for some reason. You should investigate further with your cloud provider.
 
-If there's a specific region you want to install to in Microsoft Azure that isn't available, you should [file an issue](https://github.com/Dorian8013/rAlgo/issues/new), give us information about what region is missing, and we'll add it.
+If there's a specific region you want to install to in Microsoft Azure that isn't available, you should [file an issue](https://github.com/rhdsx/ralgo/issues/new), give us information about what region is missing, and we'll add it.
 
 ### AWS: SSH permission denied with an ECDSA key
 
@@ -410,4 +410,4 @@ If your router runs [pfSense](https://www.pfsense.org) and a single IPsec client
 
 ## I have a problem not covered here
 
-If you have an issue that you cannot solve with the guidance here, ask for help. If you think you found a new issue in rAlgo, [file an issue](https://github.com/Dorian8013/rAlgo/issues/new).
+If you have an issue that you cannot solve with the guidance here, ask for help. If you think you found a new issue in rAlgo, [file an issue](https://github.com/rhdsx/ralgo/issues/new).
