@@ -20,9 +20,16 @@ Parameters:
     Type: String
   SshPort:
     Type: String
+  InstanceType:
+    Type: String
+    AllowedValues:
+      - ondemand
+      - spot
+    Default: ondemand
 Conditions:
   AllocateNewEIP: !Equals [!Ref UseThisElasticIP, '']
   AssociateExistingEIP: !Not [!Equals [!Ref UseThisElasticIP, '']]
+  RequestSpotInstance: !Equals [!Ref InstanceType, 'spot']
 Resources:
   VPC:
     Type: AWS::EC2::VPC
@@ -78,7 +85,7 @@ Resources:
       GatewayId: !Ref InternetGateway
 
   RouteSubnet:
-    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Type: AWS::EC2::SubnetRouteTableAssociation
     DependsOn:
       - RouteTable
       - Subnet
@@ -113,24 +120,40 @@ Resources:
       - Subnet
       - InstanceSecurityGroup
     Properties:
-      InstanceType:
-        Ref: InstanceTypeParameter
+      LaunchTemplate:
+        LaunchTemplateId: !If [RequestSpotInstance, !Ref LaunchTemplateSpot, !Ref AWS::NoValue]
+        Version: !If [RequestSpotInstance, !GetAtt LaunchTemplateSpot.DefaultVersionNumber, !Ref AWS::NoValue]
+      InstanceType: !Ref InstanceTypeParameter
+      InstanceInitiatedShutdownBehavior: stop
+      ImageId: !Ref ImageIdParameter
+      EbsOptimized: true
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
           Ebs:
             DeleteOnTermination: true
             VolumeSize: 8
             Encrypted: !Ref EbsEncrypted
-      InstanceInitiatedShutdownBehavior: terminate
-      SecurityGroupIds:
-        - Ref: InstanceSecurityGroup
-      ImageId:
-        Ref: ImageIdParameter
       SubnetId: !Ref Subnet
+      SecurityGroupIds:
+        - !Ref InstanceSecurityGroup
       UserData: !Ref UserData
       Tags:
         - Key: Name
           Value: !Ref AWS::StackName
+
+  LaunchTemplateSpot:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: !Join
+        - '-'
+        - - !Ref AWS::StackName
+          - Spot
+      LaunchTemplateData:
+        InstanceMarketOptions:
+          MarketType: spot
+          SpotOptions:
+            InstanceInterruptionBehavior: stop
+            SpotInstanceType: persistent
 
   ElasticIP:
     Type: AWS::EC2::EIP
@@ -139,7 +162,6 @@ Resources:
       Domain: vpc
       InstanceId: !Ref EC2Instance
     DependsOn:
-      - EC2Instance
       - VPCGatewayAttachment
 
   ElasticIPAssociation:

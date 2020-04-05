@@ -16,6 +16,7 @@
       EbsEncrypted: "{{ encrypted }}"
       UserData: "{{ lookup('template', 'files/cloud-init/base.yml') | b64encode }}"
       SshPort: "{{ ssh_port }}"
+      InstanceType: "{{ ec2_instance_type }}"
     tags:
       Environment: rAlgo
   register: stack

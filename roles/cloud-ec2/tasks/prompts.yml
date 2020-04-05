@@ -1,4 +1,18 @@
 ---
+- stat:
+    path: "{{ lookup('env', 'HOME') }}/.aws/credentials"
+  register: _aws_credentials_file
+  when: ansible_system == 'Darwin' or ansible_system == 'Linux'
+
+- pause:
+    prompt: |
+      Enter your aws named profile (or press [ENTER] for none) (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+      Note: Make sure to use a profile for an IAM user with an acceptable policy attached (see https://github.com/rhdsx/ralgo/blob/master/docs/deploy-from-ansible.md)
+  register: _aws_profile
+  when:
+    - _aws_profile is undefined
+    - _aws_credentials_file.stat.exists
+
 - pause:
     prompt: |
       Enter your aws_access_key (http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html)
@@ -7,6 +21,7 @@
   register: _aws_access_key
   when:
      - aws_access_key is undefined
+     - _aws_profile.user_input|length <=0
      - lookup('env','AWS_ACCESS_KEY_ID')|length <= 0
 
 - pause:
@@ -16,11 +31,16 @@
   register: _aws_secret_key
   when:
     - aws_secret_key is undefined
+    - _aws_profile.user_input|length <=0
     - lookup('env','AWS_SECRET_ACCESS_KEY')|length <= 0
 
 - set_fact:
-    access_key: "{{ aws_access_key | default(_aws_access_key.user_input|default(None)) | default(lookup('env','AWS_ACCESS_KEY_ID'), true) }}"
-    secret_key: "{{ aws_secret_key | default(_aws_secret_key.user_input|default(None)) | default(lookup('env','AWS_SECRET_ACCESS_KEY'), true) }}"
+    access_key: "{{ aws_access_key | default(_aws_access_key.user_input|default(None)) | default(lookup('env','AWS_ACCESS_KEY_ID')) | default(lookup('ini', 'aws_access_key_id section={{ _aws_profile.user_input|default(None) }} file={{ _aws_credentials_file.stat.path|default(None) }}', errors='ignore'), true) }}"
+    secret_key: "{{ aws_secret_key | default(_aws_secret_key.user_input|default(None)) | default(lookup('env','AWS_SECRET_ACCESS_KEY')) | default(lookup('ini', 'aws_secret_access_key section={{ _aws_profile.user_input|default(None) }} file={{ _aws_credentials_file.stat.path|default(None) }}', errors='ignore'), true) }}"
+    ralgo_dns_adblocking: >-
+      {% if dns_adblocking is defined %}{{ dns_adblocking | bool }}
+      {%- elif _dns_adblocking.user_input is defined %}{{ booleans_map[_dns_adblocking.user_input] | default(defaults['dns_adblocking']) }}
+      {%- else %}false{% endif %}
 
 - block:
   - name: Get regions
@@ -86,3 +106,19 @@
   - set_fact:
       existing_eip: "{{ available_eip_addresses[_use_existing_eip.user_input | int -1 ]['allocation_id'] }}"
   when: cloud_providers.ec2.use_existing_eip
+
+- block:
+  - pause:
+      prompt: |
+        Do you want to use AWS Spot instances? (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html)
+        [y/N]
+    register: _use_spot_instances
+    when: ec2_instance_type is undefined
+
+  - name: Set facts based on the input
+    set_fact:
+      ec2_instance_type: >-
+        {% if ec2_instance_type is defined %}{{ ec2_instance_type }}
+        {%- elif _use_spot_instances.user_input|length>0 %}
+        {% if booleans_map[_use_spot_instances.user_input] %}spot{% endif %}
+        {%- else %}ondemand{% endif %}
