@@ -57,8 +57,8 @@ The easiest way to get an rAlgo server running is to run it on your local system
 
 4. **Install rAlgo's remaining dependencies.** You'll need to run these commands from the rAlgo directory each time you download a new copy of rAlgo. In a Terminal window `cd` into the `ralgo-master` (ZIP file) or `ralgo` (`git clone`) directory and run:
     ```bash
-    python3 -m virtualenv --python="$(command -v python3)" .env &&
-      source .env/bin/activate &&
+    python3 -m virtualenv --python="$(command -v python3)" venvs/.env &&
+      source venvs/.env/bin/activate &&
       python3 -m pip install -U pip virtualenv &&
       python3 -m pip install -r requirements.txt
     ```

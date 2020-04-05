@@ -126,7 +126,7 @@ cloud_providers:
     # Set use_existing_eip to "true" if you want to use a pre-allocated Elastic IP
     # Additional prompt will be raised to determine which IP to use
     use_existing_eip: false
-    size: t3a.micro
+    size: t3a.nano
     image:
       name: "ubuntu-eoan-19.10"
       owner: "099720109477"
