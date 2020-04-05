@@ -2,8 +2,6 @@
 
 set -euxo pipefail
 
-sysctl net.ipv6.conf.all.disable_ipv6=0
-
 tar xf $HOME/lxc/cache.tar -C / || echo "Didn't extract cache."
 cp -f tests/lxd-bridge /etc/default/lxd-bridge
 cp -f tests/ralgo.conf /etc/default/ralgo.conf
