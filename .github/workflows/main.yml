@@ -70,7 +70,6 @@ jobs:
           REPOSITORY: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
           BRANCH: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref }}
         run: |
-          cp config.cfg.example config.cfg
           ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
           sudo -E ./tests/pre-deploy.sh
 
@@ -138,7 +137,6 @@ jobs:
           REPOSITORY: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
           BRANCH: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref }}
         run: |
-          cp config.cfg.example config.cfg
           ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
           sed -i "s/^reduce_mtu:\s0$/reduce_mtu: 80/" config.cfg
           sudo -E ./tests/pre-deploy.sh
