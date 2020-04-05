@@ -127,7 +127,6 @@ Resources:
       ImageId:
         Ref: ImageIdParameter
       SubnetId: !Ref Subnet
-      Ipv6AddressCount: 1
       UserData: !Ref UserData
       Tags:
         - Key: Name
