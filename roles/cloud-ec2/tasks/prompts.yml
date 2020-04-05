@@ -44,7 +44,7 @@
 
 - block:
   - name: Get regions
-    aws_region_facts:
+    aws_region_info:
       aws_access_key: "{{ access_key }}"
       aws_secret_key: "{{ secret_key }}"
       region: us-east-1
@@ -84,7 +84,7 @@
 
 - block:
   - name: Get existing available Elastic IPs
-    ec2_eip_facts:
+    ec2_eip_info:
       aws_access_key: "{{ access_key }}"
       aws_secret_key: "{{ secret_key }}"
       region: "{{ ralgo_region }}"
