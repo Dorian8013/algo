@@ -120,9 +120,12 @@ Resources:
       - Subnet
       - InstanceSecurityGroup
     Properties:
-      LaunchTemplate:
-        LaunchTemplateId: !If [RequestSpotInstance, !Ref LaunchTemplateSpot, !Ref AWS::NoValue]
-        Version: !If [RequestSpotInstance, !GetAtt LaunchTemplateSpot.DefaultVersionNumber, !Ref AWS::NoValue]
+      LaunchTemplate: !If
+        - RequestSpotInstance
+        -
+          LaunchTemplateId: !Ref LaunchTemplateSpot
+          Version: !GetAtt LaunchTemplateSpot.DefaultVersionNumber
+        - !Ref AWS::NoValue
       InstanceType: !Ref InstanceTypeParameter
       InstanceInitiatedShutdownBehavior: stop
       ImageId: !Ref ImageIdParameter
