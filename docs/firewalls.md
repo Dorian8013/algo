@@ -4,8 +4,6 @@ Your rAlgoVPN requires properly configured firewalls. The key points to know are
 
 * If you deploy to a **cloud** provider all firewall configuration will done automatically.
 
-* If you perform a **local** installation on an existing server you are responsible for configuring any external firewalls. You must also take care not to interfere with the server firewall configuration of the rAlgoVPN.
-
 ## The Two Types of Firewall
 
 ![Firewall Illustration](/docs/images/firewalls.png)
@@ -24,7 +22,7 @@ Any external firewall must be configured to pass the following incoming ports ov
 
 Port | Protocol | Description | Related variables in `config.cfg`
 ---- | -------- | ----------- | ---------------------------------
-4160  | TCP | Secure Shell (SSH) | `ssh_port` (**cloud** only; for **local** port remains 22)
+4160  | TCP | Secure Shell (SSH) | `ssh_port`
 51820 | UDP | WireGuard | `wireguard_enabled`, `wireguard_port`
 
 If you have chosen to disable either IPsec or WireGuard in `config.cfg` before running `./ralgo` then the corresponding ports don't need to pass through the firewall. SSH is used when performing a **cloud** deployment and when subsequently modifying the list of VPN users by running `./ralgo update-users`.

@@ -43,18 +43,6 @@ Server roles:
   * Installs a [Wireguard](https://www.wireguard.com/) server, with a startup script, and automatic checks for upgrades
   * Creates wireguard.conf files for Linux clients as well as QR codes for Apple/Android clients
 
-### Local Installation
-
-- role: local, provider: local
-
-This role is intended to be run for local install onto an Ubuntu server, or onto an unsupported cloud provider's Ubuntu instance. Required variables:
-
-- server - IP address of your server (or "localhost" if deploying to the local machine)
-- endpoint - public IP address of the server you're installing on
-- ssh_user - name of the SSH user you will use to install on the machine (passwordless login required). If `server=localhost`, this isn't required.
-
-Note that by default, the iptables rules on your existing server will be overwritten. If you don't want to overwrite the iptables rules, you can use the `--skip-tags iptables` flag.
-
 ### Amazon EC2
 
 Required variables:

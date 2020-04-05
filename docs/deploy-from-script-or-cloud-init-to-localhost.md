@@ -17,7 +17,7 @@ The command will prepare the environment and install rAlgoVPN with the default p
 
 ## Variables
 
-- `METHOD`: which method of the deployment to use. Possible values are local and cloud. Default: cloud. The cloud method is intended to use in cloud-init deployments only. If you are not using cloud-init to deploy the server you have to use the local method.
+- `METHOD`: which method of the deployment to use. Possible values are cloud. Default: cloud. The cloud method is intended to use in cloud-init deployments only. If you are not using cloud-init to deploy the server you have to use the local method.
 
 - `DNS_ADBLOCKING`: To install an ad blocking DNS resolver. Default: false.
 
@@ -39,14 +39,6 @@ The command will prepare the environment and install rAlgoVPN with the default p
 
 ```
 #!/bin/bash
-curl -s https://raw.githubusercontent.com/Dorian8013/rAlgo/master/install.sh | sudo -E bash -x
-```
-
-##### How to deploy locally without using cloud-init
-
-```
-export METHOD=local
-export ENDPOINT=[your server's IP here]
 curl -s https://raw.githubusercontent.com/Dorian8013/rAlgo/master/install.sh | sudo -E bash -x
 ```
 
