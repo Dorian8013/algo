@@ -52,6 +52,8 @@ publicIpFromInterface() {
 publicIpFromMetadata() {
   if test "$(curl -s http://169.254.169.254/latest/meta-data/services/domain)" = "amazonaws.com"; then
     ENDPOINT="$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)"
+  elif test "$(curl -s -H Metadata:true 'http://169.254.169.254/metadata/instance/compute/publisher/?api-version=2017-04-02&format=text')" = "Canonical"; then
+    ENDPOINT="$(curl -H Metadata:true 'http://169.254.169.254/metadata/instance/network/interface/0/ipv4/ipAddress/0/publicIpAddress?api-version=2017-04-02&format=text')"
   fi
 
   if echo "${ENDPOINT}" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"; then

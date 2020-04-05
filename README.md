@@ -74,7 +74,7 @@ You can now set up clients to connect to your VPN. Proceed to [Configure the VPN
 
 ```
     "#                          Congratulations!                            #"
-    "#                     Your rAlgo server is running.                     #"
+    "#                     Your rAlgo server is running.                    #"
     "#    Config files and certificates are in the ./configs/ directory.    #"
     "#              Go to https://whoer.net/ after connecting               #"
     "#        and ensure that all your traffic passes through the VPN.      #"

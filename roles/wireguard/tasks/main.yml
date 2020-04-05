@@ -77,4 +77,13 @@
     state: started
     enabled: true
 
+- name: Delete the PKI directory
+  file:
+    path: "{{ wireguard_pki_path }}"
+    state: absent
+  become: false
+  delegate_to: localhost
+  when:
+    - not pki_in_tmpfs
+
 - meta: flush_handlers

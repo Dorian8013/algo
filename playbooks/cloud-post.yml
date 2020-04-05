@@ -33,6 +33,13 @@
     state: present
   when: cloud_instance_ip != "localhost"
 
+- name: Mount tmpfs
+  import_tasks: tmpfs/main.yml
+  when:
+    - pki_in_tmpfs
+    - ansible_system == "Darwin" or
+      ansible_system == "Linux"
+
 - debug:
     var: IP_subject_alt_name
 

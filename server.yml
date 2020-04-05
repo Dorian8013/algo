@@ -82,6 +82,15 @@
             force: true
           when: inventory_hostname == 'localhost'
 
+        - name: Import tmpfs tasks
+          import_tasks: playbooks/tmpfs/umount.yml
+          become: false
+          delegate_to: localhost
+          vars:
+            facts: "{{ hostvars['localhost'] }}"
+          when:
+            - pki_in_tmpfs
+
         - debug:
             msg:
               - "{{ congrats.common.split('\n') }}"
