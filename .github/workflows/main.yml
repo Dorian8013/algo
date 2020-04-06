@@ -21,7 +21,6 @@ jobs:
 
       - name: Checks and linters
         run: |
-          cp config.cfg.example config.cfg
           /snap/bin/shellcheck ralgo install.sh
           ansible-playbook main.yml --syntax-check
           ansible-lint -v *.yml roles/{local,cloud-*}/*/*.yml
