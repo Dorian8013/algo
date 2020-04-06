@@ -6,8 +6,6 @@ tar xf $HOME/lxc/cache.tar -C / || echo "Didn't extract cache."
 cp -f tests/lxd-bridge /etc/default/lxd-bridge
 cp -f tests/ralgo.conf /etc/default/ralgo.conf
 
-cp config.cfg.example config.cfg
-
 export REPOSITORY=${REPOSITORY:-${GITHUB_REPOSITORY}}
 export _BRANCH=${BRANCH#refs/heads/}
 export BRANCH=${_BRANCH:-${GITHUB_REF#refs/heads/}}
