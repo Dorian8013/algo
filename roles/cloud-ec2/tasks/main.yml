@@ -12,7 +12,7 @@
     owners: "{{ cloud_providers.ec2.image.owner }}"
     region: "{{ ralgo_region }}"
     filters:
-      name: "ubuntu/images/hvm-ssd/{{ cloud_providers.ec2.image.name }}-amd64-server-*"
+      name: "ubuntu/images/hvm-ssd/{{ cloud_providers.ec2.image.name }}-{{ cloud_providers.ec2.image.arch }}-server-*"
   register: ami_search
 
 - name: Set the ami id as a fact
