@@ -20,14 +20,14 @@
     name: docker.io
     state: present
     update_cache: true
-  when: adblock_server == 'pihole'
+  when: adblock_use_pihole
 
 - name: Install docker-compose
   apt:
     name: docker-compose
     state: present
     update_cache: true
-  when: adblock_server == 'pihole'
+  when: adblock_use_pihole
 
 - name: Configure unattended-upgrades
   copy:

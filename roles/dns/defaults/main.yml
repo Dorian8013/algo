@@ -2,6 +2,7 @@
 ralgo_dns_adblocking: false
 apparmor_enabled: true
 dns_encryption: true
+adblock_use_pihole: false
 dnscrypt_servers:
   ipv4:
     - cloudflare
